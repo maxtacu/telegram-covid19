@@ -1,4 +1,5 @@
-#!/home/mtacu/personal/coronavirustatbot/venv/bin/python
+#!/home/mtacu/personal/telegram-covid19/venv/bin/python
+
 # -*- coding: utf-8 -*-
 import re
 import sys

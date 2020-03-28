@@ -19,6 +19,7 @@ with conn:
             user_id INTEGER NOT NULL PRIMARY KEY,
             username STRING,
             started_date DATE,
-            last_played DATETIME
+            last_check DATETIME,
+            language VARCHAR(3)
         )""")
 

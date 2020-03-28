@@ -37,7 +37,7 @@ deactivate () {
 # unset irrelevant variables
 deactivate nondestructive
 
-VIRTUAL_ENV="/home/mtacu/personal/coronavirustatbot/venv"
+VIRTUAL_ENV="/home/mtacu/personal/telegram-covid19/venv"
 export VIRTUAL_ENV
 
 _OLD_VIRTUAL_PATH="$PATH"
