@@ -1,6 +1,6 @@
 #!/usr/bin/python
 
-import config
+import config, transtlation
 import telebot
 import logging
 import sqlite3
@@ -20,6 +20,7 @@ def start(message):
     cid = message.chat.id
     username = message.chat.username
     check_user(cid, username)
+    language = language_check(cid)
     if message.text == '/help':
         keyboard = telebot.types.InlineKeyboardMarkup()
         keyboard.add(
@@ -27,10 +28,10 @@ def start(message):
                 'Message the developer', url='telegram.me/maxtacu'
             )
         )
-        help_text = config.telegram["helptext"]
+        help_text = transtlation.helpmessage[language]
         bot.send_message(cid, help_text, parse_mode="Markdown", reply_markup=keyboard)
     else:
-        help_text = config.telegram["helptext"]
+        help_text = transtlation.helpmessage[language]
         bot.send_message(cid, help_text, parse_mode="Markdown")
         language_pick(message)
 
@@ -63,6 +64,12 @@ def language_pick(message):
     )
     bot.send_message(message.chat.id, "Pick your language:", parse_mode="Markdown", reply_markup=keyboard)
 
+def language_check(userid):
+    c = conn.cursor()
+    with conn:
+        language = c.execute(f"""SELECT language FROM users WHERE user_id == '{userid}'""").fetchone()
+
+    return language
 
 @bot.message_handler(commands=['stats'])
 def stats(message):
@@ -86,7 +93,7 @@ def check_user(userid, username=None):
         user = c.execute(f"""SELECT user_id FROM users WHERE user_id == '{userid}'""").fetchone()
     if not user:
         with conn:
-            c.execute(f"INSERT INTO users VALUES ('{userid}', '{username}', '{time.strftime('%d-%m-%Y')}', '{now}', NULL)")
+            c.execute(f"INSERT INTO users VALUES ('{userid}', '{username}', '{time.strftime('%d-%m-%Y')}', '{now}', 'lang-eng')")
         logger.info(f"New user detected {userid}-{username}")
 
 
