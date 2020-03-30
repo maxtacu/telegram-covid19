@@ -1,5 +1,0 @@
-I will show you current stats of COVID-19 Worldwide
-
-The following commands are available:
-/help - Show this message
-/stats - Check worldwide stats

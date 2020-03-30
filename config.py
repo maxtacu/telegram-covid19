@@ -1,4 +1,5 @@
 import os
+import yaml
 
 telegram = {
     "token": os.getenv(
@@ -8,3 +9,6 @@ telegram = {
 database = {
     "filename": "covid19.db"
 }
+
+with open('translations.yaml', 'r') as file:
+    translations = yaml.safe_load(file)

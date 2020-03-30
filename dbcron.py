@@ -17,15 +17,16 @@ def update_database():
                     '{data['cases']}', 
                     '{data['deaths']}', 
                     '{data['recovered']}', 
-                    '{convert_updated(data['updated'])}', 
-                    '{data['active']}')""")
+                    '{data['active']}',
+                    '{convert_updated(data['updated'])}')""")
 
     print(f'Data updated: {now.strftime("%Y-%m-%d %H:%M:%S")}')
 
 
 def convert_updated(milliseconds):
     seconds, _ = divmod(milliseconds, 1000)
-    return seconds
+    timedate = datetime.datetime.fromtimestamp(seconds)
+    return timedate
 
 
 update_database()

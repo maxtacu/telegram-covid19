@@ -1,0 +1,52 @@
+---
+lang-eng:
+  dm: Message the developer
+  pickrequest: Choose your language
+  pick: You picked English
+  stats: |
+    *🦠 Total cases:*  {}
+    *☠️ Deaths:*  {}
+    *☘️ Recovered:*  {}
+    *🤒 Active:*  {}
+    *⏰ Data updated:* {}
+  help: |
+    I will show you current stats of COVID-19 Worldwide 
+    
+    The following commands are available: 
+    /help - Show this message 
+    /stats - Check general stats 
+
+lang-ru:
+  dm: Написать разработчику
+  pickrequest: Выбери предпочитаемый язык
+  pick: Выбран Русский язык
+  stats: |
+    *🦠 Всего случаев:*  {}
+    *☠️ Смертей:*  {}
+    *☘️ Вылеченно:*  {}
+    *🤒 Сущестующих:*  {}
+    *⏰ Данные обновлены:* {}
+  help: |
+    Я покажу тебе самую свежую статискику по COVID-19 в мире.
+
+    Следующие команды тебе доступны:
+    /help - Показать это сообщение
+    /stats - Показать общую статистику
+
+lang-pt:
+  dm: Mensagem ao programador
+  pickrequest: Escolha a sua língua
+  pick: Você escolheu o português
+  stats: |
+    *🦠 Confirmados:*  {}
+    *☠️ Óbitos:*  {}
+    *☘️ Recuperados:*  {}
+    *🤒 Ativos:*  {}
+    *⏰ Atualizado:* {}
+  help: |
+    Mostrarei as estatísticas atuais da COVID-19 no mundo 
+    
+    Os seguintes comandos estão disponíveis: 
+    /help - Mostrar esta mensagem 
+    /stats - Verifique as estatísticas gerais
+

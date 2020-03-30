@@ -10,8 +10,8 @@ with conn:
             cases INTEGER,
             deaths INTEGER,
             recovered INTEGER,
-            updated INTEGER,
-            active INTEGER
+            active INTEGER,
+            updated TEXT
         )""")
 
 with conn:
