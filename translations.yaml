@@ -8,7 +8,7 @@ lang-eng:
     *☠️ Deaths:*  {}
     *☘️ Recovered:*  {}
     *🤒 Active:*  {}
-    *⏰ Data updated:* {}
+    *⏰ Data updated:* {} UTC
   help: |
     I will show you current stats of COVID-19 Worldwide 
     
@@ -25,7 +25,7 @@ lang-ru:
     *☠️ Смертей:*  {}
     *☘️ Вылеченно:*  {}
     *🤒 Сущестующих:*  {}
-    *⏰ Данные обновлены:* {}
+    *⏰ Данные обновлены:* {} UTC
   help: |
     Я покажу тебе самую свежую статискику по COVID-19 в мире.
 
@@ -42,7 +42,7 @@ lang-pt:
     *☠️ Óbitos:*  {}
     *☘️ Recuperados:*  {}
     *🤒 Ativos:*  {}
-    *⏰ Atualizado:* {}
+    *⏰ Atualizado:* {} UTC
   help: |
     Mostrarei as estatísticas atuais da COVID-19 no mundo 
     
