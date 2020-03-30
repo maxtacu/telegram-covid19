@@ -90,7 +90,8 @@ def check_user(userid, username=None):
 
 
 def main():
-    bot.polling(timeout=30)
+    bot.infinity_polling()
+    # bot.polling(timeout=30)
 
 
 if __name__ == '__main__':
