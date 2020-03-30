@@ -4,10 +4,10 @@ lang-eng:
   pickrequest: Choose your language
   pick: You picked English
   stats: |
-    *🦠 Total cases:*  {}
-    *☠️ Deaths:*  {}
-    *☘️ Recovered:*  {}
-    *🤒 Active:*  {}
+    *🦠 Total cases:*  {:,}
+    *☠️ Deaths:*  {:,}
+    *☘️ Recovered:*  {:,}
+    *🤒 Active:*  {:,}
     *⏰ Data updated:* {} UTC
   help: |
     I will show you current stats of COVID-19 Worldwide 
@@ -21,10 +21,10 @@ lang-ru:
   pickrequest: Выбери предпочитаемый язык
   pick: Выбран Русский язык
   stats: |
-    *🦠 Всего случаев:*  {}
-    *☠️ Смертей:*  {}
-    *☘️ Вылеченно:*  {}
-    *🤒 Сущестующих:*  {}
+    *🦠 Всего случаев:*  {:,}
+    *☠️ Смертей:*  {:,}
+    *☘️ Вылеченно:*  {:,}
+    *🤒 Сущестующих:*  {:,}
     *⏰ Данные обновлены:* {} UTC
   help: |
     Я покажу тебе самую свежую статискику по COVID-19 в мире.
@@ -38,10 +38,10 @@ lang-pt:
   pickrequest: Escolha a sua língua
   pick: Você escolheu o português
   stats: |
-    *🦠 Confirmados:*  {}
-    *☠️ Óbitos:*  {}
-    *☘️ Recuperados:*  {}
-    *🤒 Ativos:*  {}
+    *🦠 Confirmados:*  {:,}
+    *☠️ Óbitos:*  {:,}
+    *☘️ Recuperados:*  {:,}
+    *🤒 Ativos:*  {:,}
     *⏰ Atualizado:* {} UTC
   help: |
     Mostrarei as estatísticas atuais da COVID-19 no mundo 
