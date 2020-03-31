@@ -90,7 +90,7 @@ def check_user(userid, username=None):
 
 
 def main():
-    bot.infinity_polling()
+    bot.infinity_polling(timeout=30)
     # bot.polling(timeout=30)
 
 
