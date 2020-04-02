@@ -32,7 +32,7 @@ def start(message):
         bot.send_message(cid, help_text, parse_mode="Markdown", reply_markup=keyboard)
     else:
         bot.send_message(cid, help_text, parse_mode="Markdown")
-        language_pick(message, language)
+        language_pick_buttons(message, language)
 
 
 @bot.callback_query_handler(func=lambda call: True)
@@ -50,7 +50,7 @@ def user_language_update(language, user):
         c.execute(f"UPDATE users SET language='{language}' WHERE user_id=={user}")
 
 
-def language_pick(message, language):
+def language_pick_buttons(message, language):
     keyboard = telebot.types.InlineKeyboardMarkup()
     keyboard.row(
         telebot.types.InlineKeyboardButton('English', callback_data='lang-eng'),
@@ -72,7 +72,7 @@ def language_check(userid):
 
 @bot.message_handler(commands=['stats'])
 def stats(message):
-    now = datetime.now().strftime('%d/%m/%Y %H:%M:%S')
+    now = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
     language = language_check(message.chat.id)
     c = conn.cursor()
     with conn:
@@ -99,7 +99,7 @@ def stats(message):
 
 def check_user(userid, username=None):
     c = conn.cursor()
-    now = datetime.now().strftime('%d/%m/%Y %H:%M:%S')
+    now = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
     with conn:
         user = c.execute(f"""SELECT user_id FROM users WHERE user_id == '{userid}'""").fetchone()
     if not user:
