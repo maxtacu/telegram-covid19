@@ -23,7 +23,7 @@ lang-ru:
   stats: |
     *🦠 Всего случаев:*  {:,}
     *☠️ Смертей:*  {:,}
-    *☘️ Вылеченно:*  {:,}
+    *☘️ Вылечено:*  {:,}
     *🤒 Сущестующих:*  {:,}
     *⏰ Данные обновлены:* {} UTC
   help: |
@@ -61,8 +61,8 @@ lang-ro:
     *🤒 Activi:*  {:,}
     *⏰ Actualizat:* {} UTC
   help: |
-    Eu iți voi prezenta statistica generala COVID-19 din lume
+    Eu îți voi prezenta statistica generală a COVID-19 în lume
     
-    Urmatoarele comenzi sunt disponibile: 
+    Următoarele comenzi sunt disponibile: 
     /help - Vezi acest mesaj
-    /stats - Verifica statutul general la COVID-19
+    /stats - Statistica generală a COVID-19
