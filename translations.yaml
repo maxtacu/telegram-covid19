@@ -50,3 +50,19 @@ lang-pt:
     /help - Mostrar esta mensagem 
     /stats - Verifique as estatísticas gerais
 
+lang-ro:
+  dm: Comunica cu developer
+  pickrequest: Alege limba
+  pick: Ai ales română
+  stats: |
+    *🦠 Confirmate:*  {:,}
+    *☠️ Decedați:*  {:,}
+    *☘️ Recuperați:*  {:,}
+    *🤒 Activi:*  {:,}
+    *⏰ Actualizat:* {} UTC
+  help: |
+    Eu iți voi prezenta statistica generala COVID-19 din lume
+    
+    Urmatoarele comenzi sunt disponibile: 
+    /help - Vezi acest mesaj
+    /stats - Verifica statutul general la COVID-19

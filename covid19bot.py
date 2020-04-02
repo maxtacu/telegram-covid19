@@ -52,10 +52,13 @@ def user_language_update(language, user):
 
 def language_pick(message, language):
     keyboard = telebot.types.InlineKeyboardMarkup()
-    keyboard.add(
+    keyboard.row(
         telebot.types.InlineKeyboardButton('English', callback_data='lang-eng'),
-        telebot.types.InlineKeyboardButton('Русский', callback_data='lang-ru'),
+        telebot.types.InlineKeyboardButton('Русский', callback_data='lang-ru')
+    )
+    keyboard.row(
         telebot.types.InlineKeyboardButton('Português', callback_data='lang-pt'),
+        telebot.types.InlineKeyboardButton('Română', callback_data='lang-ro')
     )
     bot.send_message(message.chat.id, config.translations[language]["pickrequest"], parse_mode="Markdown", reply_markup=keyboard)
 
@@ -77,6 +80,22 @@ def stats(message):
     with conn:
         *stats, = c.execute("SELECT * FROM stats").fetchone()
     bot.send_message(message.chat.id, config.translations[language]["stats"].format(*stats), parse_mode="Markdown")
+
+
+# @bot.message_handler(commands=['top'])
+# def top(message):
+#     now = datetime.now().strftime('%d/%m/%Y %H:%M:%S')
+#     # language = language_check(message.chat.id)
+#     c = conn.cursor()
+#     with conn:
+#         c.execute(f"""UPDATE users SET last_check='{now}' WHERE user_id=={message.chat.id}""")
+#     with conn:
+#         *stats, = c.execute("SELECT * FROM countries LIMIT 5").fetchall()
+#         print(*stats)
+#     for country in *stats:
+
+#     # bot.send_message(message.chat.id, config.translations[language]["stats"].format(*stats), parse_mode="Markdown")
+
 
 def check_user(userid, username=None):
     c = conn.cursor()

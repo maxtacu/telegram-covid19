@@ -23,3 +23,12 @@ with conn:
             language VARCHAR(3)
         )""")
 
+with conn:
+    c.execute("""CREATE TABLE IF NOT EXISTS countries (
+            country VARCHAR(15) NOT NULL PRIMARY KEY,
+            cases INTEGER,
+            deaths INTEGER,
+            recovered INTEGER,
+            active INTEGER,
+            updated TEXT
+        )""")
