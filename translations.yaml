@@ -66,3 +66,20 @@ lang-ro:
     Următoarele comenzi sunt disponibile: 
     /help - Vezi acest mesaj
     /stats - Statistica generală a COVID-19
+
+lang-es:
+  dm: Mensaje para el desarrollador
+  pickrequest: Elige tu idioma
+  pick: Elegiste español
+  stats: |
+    *🦠 Casos totales:*  {:,}
+    *☠️ Defunciones:*  {:,}
+    *☘️ Recuperados:*  {:,}
+    *🤒 Activos:*  {:,}
+    *⏰ Datos actualizados:* {} UTC
+  help: |
+    Te mostraré las estadísticas actuales de COVID-19 en todo el mundo
+    
+    Los siguientes comandos estás disponibles: 
+    /help - Mostrar este mensaje
+    /stats - Mostrar estadísticas generales

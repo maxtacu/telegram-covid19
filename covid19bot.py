@@ -54,7 +54,8 @@ def language_pick_buttons(message, language):
     keyboard = telebot.types.InlineKeyboardMarkup()
     keyboard.row(
         telebot.types.InlineKeyboardButton('English', callback_data='lang-eng'),
-        telebot.types.InlineKeyboardButton('Русский', callback_data='lang-ru')
+        telebot.types.InlineKeyboardButton('Русский', callback_data='lang-ru'),
+        telebot.types.InlineKeyboardButton('Español', callback_data='lang-es')
     )
     keyboard.row(
         telebot.types.InlineKeyboardButton('Português', callback_data='lang-pt'),
