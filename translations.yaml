@@ -67,13 +67,15 @@ lang-pt:
     Confira /help para mais estatísticas
   help: |
     Mostrarei as estatísticas atuais da COVID-19 no mundo 
-    
+
     Os seguintes comandos estão disponíveis: 
     /help - Mostrar esta mensagem 
     /stats - Verifique as estatísticas gerais
-    /topcases - Os 10 países casos Confirmados
-    /toprecovered - Os 10 países casos Recuperados
-    /topdeaths - Os 10 países casos Óbitos
+    /topcases - Os 10 países com mais casos Confirmados
+    /toprecovered - Os 10 países com mais casos Recuperados
+    /topdeaths - Os 10 países com mais Óbitos
+
+    Ou pode escrever o nome do país e eu mostrarei as estatísticas apenas desse país
   topconfirmed: Os *10* países com um total de casos *CONFIRMADOS* 🦠
   topdeaths: Os *10* países com um total de casos *ÓBIDOS* ☠️
   toprecovered: Os *10* países com um total de casos *RECUPERADOS* ☘️
