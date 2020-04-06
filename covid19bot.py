@@ -88,7 +88,7 @@ def stats(message):
 
 @bot.message_handler(commands=['topcases'])
 def top_confirmed(message):
-    now = datetime.now().strftime('%d/%m/%Y %H:%M:%S')
+    now = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
     language = language_check(message.chat.id)
     top_stats_full_message = config.translations[language]["topconfirmed"] + '\n\n'
     c = conn.cursor()
@@ -102,7 +102,7 @@ def top_confirmed(message):
 
 @bot.message_handler(commands=['toprecovered'])
 def top_recovered(message):
-    now = datetime.now().strftime('%d/%m/%Y %H:%M:%S')
+    now = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
     language = language_check(message.chat.id)
     top_stats_full_message = config.translations[language]["toprecovered"] + '\n\n'
     c = conn.cursor()
@@ -116,7 +116,7 @@ def top_recovered(message):
 
 @bot.message_handler(commands=['topdeaths'])
 def top_deaths(message):
-    now = datetime.now().strftime('%d/%m/%Y %H:%M:%S')
+    now = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
     language = language_check(message.chat.id)
     top_stats_full_message = config.translations[language]["topdeaths"] + '\n\n'
     c = conn.cursor()
@@ -127,6 +127,21 @@ def top_deaths(message):
     for country_stats in stats:
         top_stats_full_message += config.translations["bycountry"].format(countryname=country_stats[0], cases=country_stats[2])
     bot.send_message(message.chat.id, top_stats_full_message, parse_mode="Markdown")
+
+
+@bot.message_handler(content_types=["text"])
+def country_stats(message):
+    now = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+    language = language_check(message.chat.id)
+    c = conn.cursor()
+    with conn:
+        c.execute(f"""UPDATE users SET last_check='{now}' WHERE user_id=={message.chat.id}""")
+    with conn:
+        try:
+            *stats, = c.execute(f"SELECT cases,deaths,recovered,active,updated FROM countries WHERE country LIKE '%{message.text}%'").fetchone()
+            bot.send_message(message.chat.id, config.translations[language]["stats"].format(*stats), parse_mode="Markdown")
+        except TypeError:
+            bot.send_message(message.chat.id, "Sorry! No such country. Try to type another way")
 
 
 def check_user(userid, username=None):
