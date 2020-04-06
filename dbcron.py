@@ -3,6 +3,7 @@ import sqlite3
 import datetime
 import config
 import time
+import json
 
 conn = sqlite3.connect(config.database["filename"], check_same_thread=False)
 
@@ -31,13 +32,15 @@ def top_countries():
     with conn:
         c.execute("DELETE FROM countries")
         for country in data:
+            if "'" in country["country"]:
+                country["country"] = country["country"].replace("'", "''")
             c.execute(f"""INSERT INTO countries VALUES (
-                        '{country['country']}', 
-                        '{country['cases']}', 
-                        '{country['deaths']}', 
-                        '{country['recovered']}',
-                        '{country['active']}',
-                        '{convert_updated(country['updated'])}')""")
+                        '{country["country"]}', 
+                        '{country["cases"]}', 
+                        '{country["deaths"]}', 
+                        '{country["recovered"]}',
+                        '{country["active"]}',
+                        '{convert_updated(country["updated"])}')""")
     now = datetime.datetime.now()
     print(f'Data for countries updated: {now.strftime("%Y-%m-%d %H:%M:%S")}')
 

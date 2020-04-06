@@ -22,6 +22,8 @@ lang-en:
     /topcases - Top 10 by confirmed cases
     /toprecovered - Top 10 by recovered cases
     /topdeaths - Top 10 by deaths
+
+    Or you can *just message me the country name* and I will show you latest stats for that country.
   topconfirmed: Top *10* countries by *CONFIRMED* cases 🦠
   topdeaths: Top *10* countries by *DEATH* cases ☠️
   toprecovered: Top *10* countries by *RECOVERED* cases ☘️
@@ -38,7 +40,7 @@ lang-ru:
     *⏰ Данные обновлены:* {} UTC
     Проверь /help для большей статистики
   help: |
-    Я покажу тебе самую свежую статискику по COVID-19 в мире.
+    Я покажу тебе последнюю статискику по COVID-19 по всему миру.
 
     Следующие команды тебе доступны:
     /help - Показать это сообщение
@@ -46,6 +48,8 @@ lang-ru:
     /topcases - Топ 10 стран по общему количеству случаев
     /toprecovered - Топ 10 стран по количеству вылеченных
     /topdeaths - Топ 10 стран по количеству смертей
+
+    Также чтобы увидеть статискику по желаемой стране, ты можешь просто отправить мне название страны на английском 
   topconfirmed: Топ *10* стран по количеству *ПОДTВЕРЖДЁННЫХ* случаев 🦠
   topdeaths: Топ *10* стран по количеству *СМЕРТЕЙ* ☠️
   toprecovered: Топ *10* стран по количеству *ВЫЛЕЧЕННЫХ* ☘️
@@ -94,6 +98,8 @@ lang-ro:
     /topcases - Top 10 țări cu un numar total de cazuri
     /toprecovered - Top 10 țări cu un numar total de recuperați
     /topdeaths - Top 10 țări cu un numar total de decedați
+
+    De asemenea poți să-mi trimiți denumirea țării pentru a vedea datele referitoare la o țară anumită
   topconfirmed: Top *10* țări cu un numar total de cazuri *CONFIRMATE* 🦠
   topdeaths: Top *10* țări cu un numar total de *DECEDAȚI* ☠️
   toprecovered: Top *10* țări cu un numar total de *RECUPERAȚI* ☘️
