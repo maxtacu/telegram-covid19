@@ -1,20 +1,30 @@
 ---
-lang-eng:
+bycountry: |
+  *{countryname}*: {cases:,}
+
+lang-en:
   dm: Message the developer
   pickrequest: Choose your language
-  pick: You picked English
+  pick: You picked English 
   stats: |
     *🦠 Total cases:*  {:,}
     *☠️ Deaths:*  {:,}
     *☘️ Recovered:*  {:,}
     *🤒 Active:*  {:,}
     *⏰ Data updated:* {} UTC
+    Check-out /help for more stats
   help: |
     I will show you current stats of COVID-19 Worldwide 
     
     The following commands are available: 
     /help - Show this message 
     /stats - Check general stats 
+    /topcases - Top 10 by confirmed cases
+    /toprecovered - Top 10 by recovered cases
+    /topdeaths - Top 10 by deaths
+  topconfirmed: Top *10* countries by *CONFIRMED* cases 🦠
+  topdeaths: Top *10* countries by *DEATH* cases ☠️
+  toprecovered: Top *10* countries by *RECOVERED* cases ☘️
 
 lang-ru:
   dm: Написать разработчику
@@ -26,12 +36,19 @@ lang-ru:
     *☘️ Вылечено:*  {:,}
     *🤒 Сущестующих:*  {:,}
     *⏰ Данные обновлены:* {} UTC
+    Проверь /help для большей статистики
   help: |
     Я покажу тебе самую свежую статискику по COVID-19 в мире.
 
     Следующие команды тебе доступны:
     /help - Показать это сообщение
     /stats - Показать общую статистику
+    /topcases - Топ 10 стран по общему количеству случаев
+    /toprecovered - Топ 10 стран по количеству вылеченных
+    /topdeaths - Топ 10 стран по количеству смертей
+  topconfirmed: Топ *10* стран по количеству *ПОДTВЕРЖДЁННЫХ* случаев 🦠
+  topdeaths: Топ *10* стран по количеству *СМЕРТЕЙ* ☠️
+  toprecovered: Топ *10* стран по количеству *ВЫЛЕЧЕННЫХ* ☘️
 
 lang-pt:
   dm: Mensagem para o programador
@@ -43,12 +60,19 @@ lang-pt:
     *☘️ Recuperados:*  {:,}
     *🤒 Ativos:*  {:,}
     *⏰ Atualizado:* {} UTC
+    Confira /help para mais estatísticas
   help: |
     Mostrarei as estatísticas atuais da COVID-19 no mundo 
     
     Os seguintes comandos estão disponíveis: 
     /help - Mostrar esta mensagem 
     /stats - Verifique as estatísticas gerais
+    /topcases - Os 10 países casos Confirmados
+    /toprecovered - Os 10 países casos Recuperados
+    /topdeaths - Os 10 países casos Óbitos
+  topconfirmed: Os *10* países com um total de casos *CONFIRMADOS* 🦠
+  topdeaths: Os *10* países com um total de casos *ÓBIDOS* ☠️
+  toprecovered: Os *10* países com um total de casos *RECUPERADOS* ☘️
 
 lang-ro:
   dm: Comunica cu developer
@@ -60,12 +84,19 @@ lang-ro:
     *☘️ Recuperați:*  {:,}
     *🤒 Activi:*  {:,}
     *⏰ Actualizat:* {} UTC
+    Verifică /help pentru mai multă statistică
   help: |
     Eu îți voi prezenta statistica generală a COVID-19 în lume
     
     Următoarele comenzi sunt disponibile: 
     /help - Vezi acest mesaj
     /stats - Statistica generală a COVID-19
+    /topcases - Top 10 țări cu un numar total de cazuri
+    /toprecovered - Top 10 țări cu un numar total de recuperați
+    /topdeaths - Top 10 țări cu un numar total de decedați
+  topconfirmed: Top *10* țări cu un numar total de cazuri *CONFIRMATE* 🦠
+  topdeaths: Top *10* țări cu un numar total de *DECEDAȚI* ☠️
+  toprecovered: Top *10* țări cu un numar total de *RECUPERAȚI* ☘️
 
 lang-es:
   dm: Mensaje para el desarrollador
@@ -77,9 +108,16 @@ lang-es:
     *☘️ Recuperados:*  {:,}
     *🤒 Activos:*  {:,}
     *⏰ Datos actualizados:* {} UTC
+    Revise /help para más estadísticas
   help: |
     Te mostraré las estadísticas actuales de COVID-19 en todo el mundo
     
     Los siguientes comandos estás disponibles: 
     /help - Mostrar este mensaje
     /stats - Mostrar estadísticas generales
+    /topcases - Los 10 países casos Confirmados
+    /toprecovered - Los 10 países casos Recuperados
+    /topdeaths - Los 10 países casos Defunciones
+  topconfirmed: Los *10* países con un total de casos *CONFIRMADOS* 🦠
+  topdeaths: Los *10* países con un total de casos *DEFUCIONES* cases ☠️
+  toprecovered: Los *10* países con un total de casos *RECUPERADOS* cases ☘️

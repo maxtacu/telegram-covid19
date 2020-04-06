@@ -1,0 +1,5 @@
+help - Show available commands
+stats - Show global stats
+topcases - Top 10 by confirmed cases
+toprecovered - Top 10 by recovered cases
+topdeaths - Top 10 by deaths
