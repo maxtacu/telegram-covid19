@@ -166,15 +166,15 @@ lang-es:
     *⏰ Datos actualizados:* {} UTC
     Revise /help para más estadísticas
   stats-per-country: |
-    Detailed stats for *{}*
+    Estadísticas detalladas de *{}*
     *🦠 Casos totales:*  {:,}
-    *🦠 Last24h сasos:*  {:,}
+    *🦠 Casos confirmados (ultimas 24hs):*  {:,}
     *☠️ Defunciones:*  {:,}
-    *☠️ Last24h Deaths:*  {:,}
+    *☠️ Defunciones (ultimas 24hs):*  {:,}
     *☘️ Recuperados:*  {:,}
-    *🚨 Critical cases:* {:,}
+    *🚨 Casos críticos:* {:,}
     *🤒 Activos:*  {:,}
-    *🧪 Tests made*: {:,}
+    *🧪 Tests realizados*: {:,}
     *⏰ Datos actualizados:* {} UTC
     Revise /help para más estadísticas
   help: |
@@ -186,6 +186,6 @@ lang-es:
     /topcases - Los 10 países casos Confirmados
     /toprecovered - Los 10 países casos Recuperados
     /topdeaths - Los 10 países casos Defunciones
-  topconfirmed: Los *10* países con un total de casos *CONFIRMADOS* 🦠
-  topdeaths: Los *10* países con un total de casos *DEFUCIONES* cases ☠️
-  toprecovered: Los *10* países con un total de casos *RECUPERADOS* cases ☘️
+  topconfirmed: Los *10* países con más casos *CONFIRMADOS* 🦠
+  topdeaths: Los *10* paises con más *DEFUNCIONES* ☠️
+  toprecovered: Los *10* países con más casos *RECUPERADOS* ☘️
