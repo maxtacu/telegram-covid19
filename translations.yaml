@@ -52,17 +52,17 @@ lang-ru:
     *⏰ Данные обновлены:* {} UTC
     Проверь /help для большей статистики
   stats-per-country: |
-    Detailed stats for *{}*
-    *🦠 Total cases:*  {:,}
-    *🦠 Last24h cases:*  {:,}
-    *☠️ Deaths:*  {:,}
-    *☠️ Last24h Deaths:*  {:,}
-    *☘️ Recovered:*  {:,}
-    *🚨 Critical cases:* {:,}
-    *🤒 Active:*  {:,}
-    *🧪 Tests made*: {:,}
-    *⏰ Data updated:* {} UTC
-    Check-out /help for more stats
+    Детальная статистика по *{}*
+    *🦠 Всего случаев:*  {:,}
+    *🦠 Случаев за последние 24 часа:*  {:,}
+    *☠️ Смертей:*  {:,}
+    *☠️ Смертей за последние 24 часа:*  {:,}
+    *☘️ Вылечено:*  {:,}
+    *🚨 В кричическом состоянии:* {:,}
+    *🤒 Сущестующих:*  {:,}
+    *🧪 Подозрений*: {:,}
+    *⏰ Данные обновлены:* {} UTC
+    Проверь /help для большей статистики
   help: |
     Я покажу тебе последнюю статискику по COVID-19 по всему миру.
 
@@ -93,14 +93,14 @@ lang-pt:
     Detailed stats for *{}*
     *🦠 Total cases:*  {:,}
     *🦠 Last24h cases:*  {:,}
-    *☠️ Deaths:*  {:,}
+    *☠️ Óbitos:*  {:,}
     *☠️ Last24h Deaths:*  {:,}
     *☘️ Recovered:*  {:,}
     *🚨 Critical cases:* {:,}
     *🤒 Active:*  {:,}
     *🧪 Tests made*: {:,}
     *⏰ Data updated:* {} UTC
-    Check-out /help for more stats
+    Confira /help para mais estatísticas
   help: |
     Mostrarei as estatísticas atuais da COVID-19 no mundo 
 
@@ -128,17 +128,17 @@ lang-ro:
     *⏰ Actualizat:* {} UTC
     Verifică /help pentru mai multă statistică
   stats-per-country: |
-    Detailed stats for *{}*
-    *🦠 Total cases:*  {:,}
-    *🦠 Last24h cases:*  {:,}
-    *☠️ Deaths:*  {:,}
-    *☠️ Last24h Deaths:*  {:,}
-    *☘️ Recovered:*  {:,}
-    *🚨 Critical cases:* {:,}
-    *🤒 Active:*  {:,}
-    *🧪 Tests made*: {:,}
-    *⏰ Data updated:* {} UTC
-    Check-out /help for more stats
+    Statistica detaliată pentru *{}*
+    *🦠 Confirmate:*  {:,}
+    *🦠 Confirmate în ultimele 24 ore:*  {:,}
+    *☠️ Decedați:*  {:,}
+    *☠️ Decedați în ultimele 24 ore:*  {:,}
+    *☘️ Recuperați:*  {:,}
+    *🚨 Cazuri critice:* {:,}
+    *🤒 Activi:*  {:,}
+    *🧪 Cazuri suspecte*: {:,}
+    *⏰ Actualizat:* {} UTC
+    Verifică /help pentru mai multă statistică
   help: |
     Eu îți voi prezenta statistica generală a COVID-19 în lume
     
@@ -167,16 +167,16 @@ lang-es:
     Revise /help para más estadísticas
   stats-per-country: |
     Detailed stats for *{}*
-    *🦠 Total cases:*  {:,}
-    *🦠 Last24h cases:*  {:,}
-    *☠️ Deaths:*  {:,}
+    *🦠 Casos totales:*  {:,}
+    *🦠 Last24h сasos:*  {:,}
+    *☠️ Defunciones:*  {:,}
     *☠️ Last24h Deaths:*  {:,}
-    *☘️ Recovered:*  {:,}
+    *☘️ Recuperados:*  {:,}
     *🚨 Critical cases:* {:,}
-    *🤒 Active:*  {:,}
+    *🤒 Activos:*  {:,}
     *🧪 Tests made*: {:,}
-    *⏰ Data updated:* {} UTC
-    Check-out /help for more stats
+    *⏰ Datos actualizados:* {} UTC
+    Revise /help para más estadísticas
   help: |
     Te mostraré las estadísticas actuales de COVID-19 en todo el mundo
     
