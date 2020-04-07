@@ -13,6 +13,18 @@ lang-en:
     *🤒 Active:*  {:,}
     *⏰ Data updated:* {} UTC
     Check-out /help for more stats
+  stats-per-country: |
+    Detailed stats for *{}*
+    *🦠 Total cases:*  {:,}
+    *🦠 Last24h cases:*  {:,}
+    *☠️ Deaths:*  {:,}
+    *☠️ Last24h Deaths:*  {:,}
+    *☘️ Recovered:*  {:,}
+    *🚨 Critical cases:* {:,}
+    *🤒 Active:*  {:,}
+    *🧪 Tests made*: {:,}
+    *⏰ Data updated:* {} UTC
+    Check-out /help for more stats
   help: |
     I will show you current stats of COVID-19 Worldwide 
     
@@ -39,6 +51,18 @@ lang-ru:
     *🤒 Сущестующих:*  {:,}
     *⏰ Данные обновлены:* {} UTC
     Проверь /help для большей статистики
+  stats-per-country: |
+    Detailed stats for *{}*
+    *🦠 Total cases:*  {:,}
+    *🦠 Last24h cases:*  {:,}
+    *☠️ Deaths:*  {:,}
+    *☠️ Last24h Deaths:*  {:,}
+    *☘️ Recovered:*  {:,}
+    *🚨 Critical cases:* {:,}
+    *🤒 Active:*  {:,}
+    *🧪 Tests made*: {:,}
+    *⏰ Data updated:* {} UTC
+    Check-out /help for more stats
   help: |
     Я покажу тебе последнюю статискику по COVID-19 по всему миру.
 
@@ -65,6 +89,18 @@ lang-pt:
     *🤒 Ativos:*  {:,}
     *⏰ Atualizado:* {} UTC
     Confira /help para mais estatísticas
+  stats-per-country: |
+    Detailed stats for *{}*
+    *🦠 Total cases:*  {:,}
+    *🦠 Last24h cases:*  {:,}
+    *☠️ Deaths:*  {:,}
+    *☠️ Last24h Deaths:*  {:,}
+    *☘️ Recovered:*  {:,}
+    *🚨 Critical cases:* {:,}
+    *🤒 Active:*  {:,}
+    *🧪 Tests made*: {:,}
+    *⏰ Data updated:* {} UTC
+    Check-out /help for more stats
   help: |
     Mostrarei as estatísticas atuais da COVID-19 no mundo 
 
@@ -91,6 +127,18 @@ lang-ro:
     *🤒 Activi:*  {:,}
     *⏰ Actualizat:* {} UTC
     Verifică /help pentru mai multă statistică
+  stats-per-country: |
+    Detailed stats for *{}*
+    *🦠 Total cases:*  {:,}
+    *🦠 Last24h cases:*  {:,}
+    *☠️ Deaths:*  {:,}
+    *☠️ Last24h Deaths:*  {:,}
+    *☘️ Recovered:*  {:,}
+    *🚨 Critical cases:* {:,}
+    *🤒 Active:*  {:,}
+    *🧪 Tests made*: {:,}
+    *⏰ Data updated:* {} UTC
+    Check-out /help for more stats
   help: |
     Eu îți voi prezenta statistica generală a COVID-19 în lume
     
@@ -117,6 +165,18 @@ lang-es:
     *🤒 Activos:*  {:,}
     *⏰ Datos actualizados:* {} UTC
     Revise /help para más estadísticas
+  stats-per-country: |
+    Detailed stats for *{}*
+    *🦠 Total cases:*  {:,}
+    *🦠 Last24h cases:*  {:,}
+    *☠️ Deaths:*  {:,}
+    *☠️ Last24h Deaths:*  {:,}
+    *☘️ Recovered:*  {:,}
+    *🚨 Critical cases:* {:,}
+    *🤒 Active:*  {:,}
+    *🧪 Tests made*: {:,}
+    *⏰ Data updated:* {} UTC
+    Check-out /help for more stats
   help: |
     Te mostraré las estadísticas actuales de COVID-19 en todo el mundo
     

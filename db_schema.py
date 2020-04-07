@@ -27,8 +27,12 @@ with conn:
     c.execute("""CREATE TABLE IF NOT EXISTS countries (
             country VARCHAR(15) NOT NULL PRIMARY KEY,
             cases INTEGER,
+            todayCases INTEGER,
             deaths INTEGER,
+            todayDeaths INTEGER,
             recovered INTEGER,
+            critical INTEGER,
             active INTEGER,
+            tests INTEGER,
             updated TEXT
         )""")

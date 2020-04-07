@@ -138,8 +138,8 @@ def country_stats(message):
         c.execute(f"""UPDATE users SET last_check='{now}' WHERE user_id=={message.chat.id}""")
     with conn:
         try:
-            *stats, = c.execute(f"SELECT cases,deaths,recovered,active,updated FROM countries WHERE country LIKE '%{message.text}%'").fetchone()
-            bot.send_message(message.chat.id, config.translations[language]["stats"].format(*stats), parse_mode="Markdown")
+            *stats, = c.execute(f"SELECT * FROM countries WHERE country LIKE '%{message.text}%'").fetchone()
+            bot.send_message(message.chat.id, config.translations[language]["stats-per-country"].format(*stats), parse_mode="Markdown")
         except TypeError:
             bot.send_message(message.chat.id, "Sorry! No such country. Try to type another way")
 

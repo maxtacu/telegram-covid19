@@ -25,7 +25,7 @@ def global_stats():
     print(f'General data updated: {now.strftime("%Y-%m-%d %H:%M:%S")}')
 
 
-def top_countries():
+def all_countries():
     response = requests.get("https://corona.lmao.ninja/countries?sort=cases")
     data = response.json()
     c = conn.cursor()
@@ -37,9 +37,13 @@ def top_countries():
             c.execute(f"""INSERT INTO countries VALUES (
                         '{country["country"]}', 
                         '{country["cases"]}', 
+                        '{country["todayCases"]}', 
                         '{country["deaths"]}', 
+                        '{country["todayDeaths"]}', 
                         '{country["recovered"]}',
+                        '{country["critical"]}',
                         '{country["active"]}',
+                        '{country["tests"]}',
                         '{convert_updated(country["updated"])}')""")
     now = datetime.datetime.now()
     print(f'Data for countries updated: {now.strftime("%Y-%m-%d %H:%M:%S")}')
@@ -53,4 +57,4 @@ def convert_updated(milliseconds):
 
 global_stats()
 time.sleep(3)
-top_countries()
+all_countries()
