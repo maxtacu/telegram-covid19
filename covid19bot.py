@@ -95,7 +95,7 @@ def top_confirmed(message):
     with conn:
         c.execute(f"""UPDATE users SET last_check='{now}' WHERE user_id=={message.chat.id}""")
     with conn:
-        *stats, = c.execute("SELECT * FROM countries ORDER BY cases DESC LIMIT 10").fetchall()
+        *stats, = c.execute("SELECT country,cases FROM countries ORDER BY cases DESC LIMIT 10").fetchall()
     for country_stats in stats:
         top_stats_full_message += config.translations["bycountry"].format(countryname=country_stats[0], cases=country_stats[1])
     bot.send_message(message.chat.id, top_stats_full_message, parse_mode="Markdown")
@@ -109,9 +109,9 @@ def top_recovered(message):
     with conn:
         c.execute(f"""UPDATE users SET last_check='{now}' WHERE user_id=={message.chat.id}""")
     with conn:
-        *stats, = c.execute("SELECT * FROM countries ORDER BY recovered DESC LIMIT 10").fetchall()
+        *stats, = c.execute("SELECT country,recovered FROM countries ORDER BY recovered DESC LIMIT 10").fetchall()
     for country_stats in stats:
-        top_stats_full_message += config.translations["bycountry"].format(countryname=country_stats[0], cases=country_stats[3])
+        top_stats_full_message += config.translations["bycountry"].format(countryname=country_stats[0], cases=country_stats[1])
     bot.send_message(message.chat.id, top_stats_full_message, parse_mode="Markdown")
 
 @bot.message_handler(commands=['topdeaths'])
@@ -123,9 +123,9 @@ def top_deaths(message):
     with conn:
         c.execute(f"""UPDATE users SET last_check='{now}' WHERE user_id=={message.chat.id}""")
     with conn:
-        *stats, = c.execute("SELECT * FROM countries ORDER BY deaths DESC LIMIT 10").fetchall()
+        *stats, = c.execute("SELECT country,deaths FROM countries ORDER BY deaths DESC LIMIT 10").fetchall()
     for country_stats in stats:
-        top_stats_full_message += config.translations["bycountry"].format(countryname=country_stats[0], cases=country_stats[2])
+        top_stats_full_message += config.translations["bycountry"].format(countryname=country_stats[0], cases=country_stats[1])
     bot.send_message(message.chat.id, top_stats_full_message, parse_mode="Markdown")
 
 
