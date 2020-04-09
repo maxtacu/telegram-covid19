@@ -90,16 +90,16 @@ lang-pt:
     *⏰ Atualizado:* {} UTC
     Confira /help para mais estatísticas
   stats-per-country: |
-    Detailed stats for *{}*
-    *🦠 Total cases:*  {:,}
-    *🦠 Last24h cases:*  {:,}
+    Estatísticas detalhadas para *{}*
+    *🦠 Confirmados:*  {:,}
+    *🦠 Confirmados (ultimos 24hs):*  {:,}
     *☠️ Óbitos:*  {:,}
-    *☠️ Last24h Deaths:*  {:,}
-    *☘️ Recovered:*  {:,}
-    *🚨 Critical cases:* {:,}
-    *🤒 Active:*  {:,}
-    *🧪 Tests made*: {:,}
-    *⏰ Data updated:* {} UTC
+    *☠️ Óbitos (ultimos 24hs):*  {:,}
+    *☘️ Recuperados:*  {:,}
+    *🚨 Casos críticos:* {:,}
+    *🤒 Ativos:*  {:,}
+    *🧪 Amostras*: {:,}
+    *⏰ Atualizado:* {} UTC
     Confira /help para mais estatísticas
   help: |
     Mostrarei as estatísticas atuais da COVID-19 no mundo 
