@@ -141,7 +141,22 @@ def country_stats(message):
             *stats, = c.execute(f"SELECT * FROM countries WHERE country LIKE '%{message.text}%'").fetchone()
             bot.send_message(message.chat.id, config.translations[language]["stats-per-country"].format(*stats), parse_mode="Markdown")
         except TypeError:
-            bot.send_message(message.chat.id, "Sorry! No such country. Try to type another way")
+            bot.send_message(message.chat.id, config.translations[language]["wrong-country"])
+
+
+# @bot.message_handler(commands=['notif'])
+# def notification_set(message):
+#     now = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+#     language = language_check(message.chat.id)
+#     c = conn.cursor()
+#     with conn:
+#         c.execute(f"""UPDATE users SET last_check='{now}' WHERE user_id=={message.chat.id}""")
+#     with conn:
+#         try:
+#             *stats, = c.execute(f"SELECT * FROM countries WHERE country LIKE '%{message.text}%'").fetchone()
+#             bot.send_message(message.chat.id, config.translations[language]["stats-per-country"].format(*stats), parse_mode="Markdown")
+#         except TypeError:
+#             bot.send_message(message.chat.id, config.translations[language]["wrong-country"])
 
 
 def check_user(userid, username=None):

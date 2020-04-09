@@ -25,6 +25,7 @@ lang-en:
     *🧪 Tests made*: {:,}
     *⏰ Data updated:* {} UTC
     Check-out /help for more stats
+  wrong-country: Sorry! I'm not familiar with this country. Try to type another way
   help: |
     I will show you current stats of COVID-19 Worldwide 
     
@@ -63,6 +64,7 @@ lang-ru:
     *🧪 Подозрений*: {:,}
     *⏰ Данные обновлены:* {} UTC
     Проверь /help для большей статистики
+  wrong-country: Прошу прощения, мне такая страна не знакома. Попробуй написать иначе
   help: |
     Я покажу тебе последнюю статискику по COVID-19 по всему миру.
 
@@ -101,6 +103,7 @@ lang-pt:
     *🧪 Amostras*: {:,}
     *⏰ Atualizado:* {} UTC
     Confira /help para mais estatísticas
+  wrong-country: Sorry! No such country. Try to type another way
   help: |
     Mostrarei as estatísticas atuais da COVID-19 no mundo 
 
@@ -139,6 +142,7 @@ lang-ro:
     *🧪 Cazuri suspecte*: {:,}
     *⏰ Actualizat:* {} UTC
     Verifică /help pentru mai multă statistică
+  wrong-country: Cer scuze, nu recunosc țara asta. Mai încearcă
   help: |
     Eu îți voi prezenta statistica generală a COVID-19 în lume
     
@@ -177,6 +181,7 @@ lang-es:
     *🧪 Tests realizados*: {:,}
     *⏰ Datos actualizados:* {} UTC
     Revise /help para más estadísticas
+  wrong-country: Perdón! No existe ese país. Intenta escribirlo de otra manera.
   help: |
     Te mostraré las estadísticas actuales de COVID-19 en todo el mundo
     
