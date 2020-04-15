@@ -1,12 +1,9 @@
 import sqlite3
 import config
 
-conn = sqlite3.connect(config.database["filename"])
+WRITER = sqlite3.connect(config.DATABASE["filename"], isolation_level=None)
 
-c = conn.cursor()
-
-with conn:
-    c.execute("""CREATE TABLE IF NOT EXISTS stats (
+WRITER.execute("""CREATE TABLE IF NOT EXISTS stats (
             cases INTEGER,
             deaths INTEGER,
             recovered INTEGER,
@@ -14,8 +11,7 @@ with conn:
             updated TEXT
         )""")
 
-with conn:
-    c.execute("""CREATE TABLE IF NOT EXISTS users (
+WRITER.execute("""CREATE TABLE IF NOT EXISTS users (
             user_id INTEGER NOT NULL PRIMARY KEY,
             username STRING,
             started_date DATE,
@@ -23,8 +19,7 @@ with conn:
             language VARCHAR(3)
         )""")
 
-with conn:
-    c.execute("""CREATE TABLE IF NOT EXISTS countries (
+WRITER.execute("""CREATE TABLE IF NOT EXISTS countries (
             country VARCHAR(15) NOT NULL PRIMARY KEY,
             cases INTEGER,
             todayCases INTEGER,
@@ -34,5 +29,13 @@ with conn:
             critical INTEGER,
             active INTEGER,
             tests INTEGER,
-            updated TEXT
+            updated DATETIME
         )""")
+
+WRITER.execute("""CREATE TABLE IF NOT EXISTS notifications (
+            user_id INTEGER NOT NULL,
+            username STRING,
+            country VARCHAR(15) NOT NULL,
+            added DATETIME
+        )""")
+        

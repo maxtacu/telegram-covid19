@@ -1,14 +1,14 @@
 import os
 import yaml
 
-telegram = {
+TELEGRAM = {
     "token": os.getenv(
         "TOKEN", "test-token"
     )
 }
-database = {
+DATABASE = {
     "filename": "covid19.db"
 }
 
 with open('translations.yaml', 'r') as file:
-    translations = yaml.safe_load(file)
+    TRANSLATIONS = yaml.safe_load(file)

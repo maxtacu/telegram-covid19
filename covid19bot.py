@@ -1,56 +1,84 @@
 #!/usr/bin/python
 
-import config
 import telebot
 import logging
 import sqlite3
 import time
 from datetime import datetime
+import config
 
 
-bot = telebot.TeleBot(config.telegram["token"])
-
-conn = sqlite3.connect(config.database["filename"], check_same_thread=False)
+BOT = telebot.TeleBot(config.TELEGRAM["token"])
+WRITER = sqlite3.connect(config.DATABASE["filename"], check_same_thread=False, isolation_level=None)
+WRITER.execute('pragma journal_mode=wal;') # write-ahead-logging (WAL)
+READER = sqlite3.connect(config.DATABASE["filename"], check_same_thread=False, isolation_level=None)
+READER.execute('pragma journal_mode=wal;') # write-ahead-logging (WAL)
 # Enable logging
-logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', level=logging.INFO)
-logger = logging.getLogger(__name__)
+logging.basicConfig(
+    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
+    level=logging.INFO
+)
+LOGGER = logging.getLogger(__name__)
 
 
-@bot.message_handler(commands=['start', 'help'])
+@BOT.message_handler(commands=['start', 'help'])
 def start(message):
-    cid = message.chat.id
-    username = message.chat.username
-    check_user(cid, username)
-    language = language_check(cid)
-    help_text = config.translations[language]["help"]
+    check_user(message.chat.id, message.chat.username)
+    language = language_check(message.chat.id)
+    help_text = config.TRANSLATIONS[language]["help"]
     if message.text == '/help':
         keyboard = telebot.types.InlineKeyboardMarkup()
         keyboard.add(
             telebot.types.InlineKeyboardButton(
-                config.translations[language]["dm"], url='telegram.me/maxtacu'
+                config.TRANSLATIONS[language]["dm"], url='telegram.me/maxtacu'
             )
         )
-        bot.send_message(cid, help_text, parse_mode="Markdown", reply_markup=keyboard)
+        BOT.send_message(message.chat.id, help_text, parse_mode="Markdown", reply_markup=keyboard)
     else:
-        bot.send_message(cid, help_text, parse_mode="Markdown")
+        BOT.send_message(message.chat.id, help_text, parse_mode="Markdown")
         language_pick_buttons(message, language)
 
 
-@bot.callback_query_handler(func=lambda call: True)
+@BOT.callback_query_handler(func=lambda call: True)
 def iq_callback(query):
-   data = query.data
-   if data == 'lang-eng':
-       bot.answer_callback_query(query.id, "Please type /start again!")
-   elif data.startswith('lang-'):
+    """
+    Callback query handler
+    """
+    if query.data.startswith('lang-'):
         user_language_update(query.data, query.message.chat.id)
         language = language_check(query.message.chat.id)
-        bot.answer_callback_query(query.id, config.translations[language]["pick"])
-        
+        BOT.answer_callback_query(query.id, config.TRANSLATIONS[language]["pick"])
+    if query.data.startswith('notif-'):
+        if query.data == 'notif-remove':
+            remove_notif(query)
+        else:
+            edit_notif_callback_message(query)
+
+
+def remove_notif(query):
+    try:
+        WRITER.execute(f"DELETE FROM notifications WHERE user_id=={query.message.chat.id} AND country=='{query.message.text}'")
+        BOT.answer_callback_query(query.id, "Notification successfully removed")
+    except:
+        BOT.answer_callback_query(query.id, "An error occured. Try again")
+
+
+def edit_notif_callback_message(query):
+    keyboard = telebot.types.InlineKeyboardMarkup()
+    keyboard.add(
+        telebot.types.InlineKeyboardButton('Remove', callback_data='notif-remove')
+    )
+    BOT.edit_message_text(
+        f"*{query.data.replace('notif-','')}*",
+        query.message.chat.id,
+        query.message.message_id,
+        reply_markup=keyboard,
+        parse_mode='Markdown'
+    )
+
 
 def user_language_update(language, user):
-    c = conn.cursor()
-    with conn:
-        c.execute(f"UPDATE users SET language='{language}' WHERE user_id=={user}")
+    WRITER.execute(f"UPDATE users SET language='{language}' WHERE user_id=={user}")
 
 
 def language_pick_buttons(message, language):
@@ -64,114 +92,179 @@ def language_pick_buttons(message, language):
         telebot.types.InlineKeyboardButton('Português', callback_data='lang-pt'),
         telebot.types.InlineKeyboardButton('Română', callback_data='lang-ro')
     )
-    bot.send_message(message.chat.id, config.translations[language]["pickrequest"], parse_mode="Markdown", reply_markup=keyboard)
+    BOT.send_message(
+        message.chat.id,
+        config.TRANSLATIONS[language]["pickrequest"],
+        parse_mode="Markdown",
+        reply_markup=keyboard
+    )
 
 
 def language_check(userid):
-    c = conn.cursor()
-    with conn:
-        language = c.execute(f"""SELECT language FROM users WHERE user_id == '{userid}'""").fetchone()
+    language = READER.execute(f"SELECT language FROM users WHERE user_id=='{userid}'").fetchone()
     return language[0]
 
 
-@bot.message_handler(commands=['stats'])
-def stats(message):
+def update_user_checktime(user_id):
     now = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+    WRITER.execute(f"UPDATE users SET last_check='{now}' WHERE user_id=={user_id}")
+
+
+@BOT.message_handler(commands=['stats'])
+def allstats(message):
+    update_user_checktime(message.chat.id)
     language = language_check(message.chat.id)
-    c = conn.cursor()
-    with conn:
-        c.execute(f"""UPDATE users SET last_check='{now}' WHERE user_id=={message.chat.id}""")
-    with conn:
-        *stats, = c.execute("SELECT * FROM stats").fetchone()
-    bot.send_message(message.chat.id, config.translations[language]["stats"].format(*stats), parse_mode="Markdown")
+    *stats, = READER.execute("SELECT * FROM stats").fetchone()
+    BOT.send_message(
+        message.chat.id,
+        config.TRANSLATIONS[language]["stats"].format(*stats), parse_mode="Markdown")
 
 
-@bot.message_handler(commands=['topcases'])
+@BOT.message_handler(commands=['topcases'])
 def top_confirmed(message):
-    now = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
     language = language_check(message.chat.id)
-    top_stats_full_message = config.translations[language]["topconfirmed"] + '\n\n'
-    c = conn.cursor()
-    with conn:
-        c.execute(f"""UPDATE users SET last_check='{now}' WHERE user_id=={message.chat.id}""")
-    with conn:
-        *stats, = c.execute("SELECT country,cases FROM countries ORDER BY cases DESC LIMIT 10").fetchall()
-    for country_stats in stats:
-        top_stats_full_message += config.translations["bycountry"].format(countryname=country_stats[0], cases=country_stats[1])
-    bot.send_message(message.chat.id, top_stats_full_message, parse_mode="Markdown")
+    top_stats_message = config.TRANSLATIONS[language]["topconfirmed"] + '\n\n'
+    update_user_checktime(message.chat.id)
+    *stats, = READER.execute("SELECT country,cases FROM countries ORDER BY cases DESC LIMIT 10").fetchall()
+    for country in stats:
+        top_stats_message += config.TRANSLATIONS["bycountry"].format(countryname=country[0], cases=country[1])
+    BOT.send_message(message.chat.id, top_stats_message, parse_mode="Markdown")
 
-@bot.message_handler(commands=['toprecovered'])
+
+@BOT.message_handler(commands=['toprecovered'])
 def top_recovered(message):
-    now = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
     language = language_check(message.chat.id)
-    top_stats_full_message = config.translations[language]["toprecovered"] + '\n\n'
-    c = conn.cursor()
-    with conn:
-        c.execute(f"""UPDATE users SET last_check='{now}' WHERE user_id=={message.chat.id}""")
-    with conn:
-        *stats, = c.execute("SELECT country,recovered FROM countries ORDER BY recovered DESC LIMIT 10").fetchall()
-    for country_stats in stats:
-        top_stats_full_message += config.translations["bycountry"].format(countryname=country_stats[0], cases=country_stats[1])
-    bot.send_message(message.chat.id, top_stats_full_message, parse_mode="Markdown")
+    top_stats_message = config.TRANSLATIONS[language]["toprecovered"] + '\n\n'
+    update_user_checktime(message.chat.id)
+    *stats, = READER.execute("SELECT country,recovered FROM countries ORDER BY recovered DESC LIMIT 10").fetchall()
+    for country in stats:
+        top_stats_message += config.TRANSLATIONS["bycountry"].format(countryname=country[0], cases=country[1])
+    BOT.send_message(message.chat.id, top_stats_message, parse_mode="Markdown")
 
-@bot.message_handler(commands=['topdeaths'])
+
+@BOT.message_handler(commands=['topdeaths'])
 def top_deaths(message):
-    now = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
     language = language_check(message.chat.id)
-    top_stats_full_message = config.translations[language]["topdeaths"] + '\n\n'
-    c = conn.cursor()
-    with conn:
-        c.execute(f"""UPDATE users SET last_check='{now}' WHERE user_id=={message.chat.id}""")
-    with conn:
-        *stats, = c.execute("SELECT country,deaths FROM countries ORDER BY deaths DESC LIMIT 10").fetchall()
-    for country_stats in stats:
-        top_stats_full_message += config.translations["bycountry"].format(countryname=country_stats[0], cases=country_stats[1])
-    bot.send_message(message.chat.id, top_stats_full_message, parse_mode="Markdown")
+    top_stats_message = config.TRANSLATIONS[language]["topdeaths"] + '\n\n'
+    update_user_checktime(message.chat.id)
+    *stats, = READER.execute("SELECT country,deaths FROM countries ORDER BY deaths DESC LIMIT 10").fetchall()
+    for country in stats:
+        top_stats_message += config.TRANSLATIONS["bycountry"].format(countryname=country[0], cases=country[1])
+    BOT.send_message(message.chat.id, top_stats_message, parse_mode="Markdown")
 
 
-@bot.message_handler(content_types=["text"])
+@BOT.message_handler(commands=['mynotif'])
+def notification_check(message):
+    # language = language_check(message.chat.id)
+    update_user_checktime(message.chat.id)
+    try:
+        countries = READER.execute(f"SELECT country FROM notifications WHERE user_id=={message.chat.id}").fetchall()
+        if not countries:
+            BOT.send_message(
+                message.chat.id,
+                "No notifications are set. Type /setnotif to set notification for a specific country"
+            )
+            # BOT.register_next_step_handler(message, add_notification)
+        else:
+            keyboard = existing_notifications_buttons(countries)
+            BOT.send_message(
+                message.chat.id,
+                "Here are your activated notifications",
+                parse_mode="Markdown",
+                reply_markup=keyboard
+            )
+    except:
+        BOT.send_message(message.chat.id, "An error occured. Try again")
+
+
+def existing_notifications_buttons(countrylist):
+    keyboard = telebot.types.InlineKeyboardMarkup()
+    for country in countrylist:
+        keyboard.add(
+            telebot.types.InlineKeyboardButton(
+                country[0],
+                callback_data=f'notif-{country[0]}'
+            )
+        )
+    return keyboard
+
+
+@BOT.message_handler(commands=['setnotif'])
+def notification_set(message):
+    # language = language_check(message.chat.id)
+    update_user_checktime(message.chat.id)
+    try:
+        BOT.send_message(message.chat.id, "Type country name to set notification for")
+        BOT.register_next_step_handler(message, add_notification)
+    except:
+        BOT.send_message(message.chat.id, "An error occured. Try again")
+
+
+def add_notification(message):
+    now = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+    # language = language_check(message.chat.id)
+    countryname = check_country(message)
+    notif_exists = READER.execute(f"SELECT country FROM notifications WHERE country=='{countryname}' AND user_id=={message.chat.id}").fetchone()
+    if notif_exists:
+        BOT.send_message(message.chat.id, f'Notification for {countryname} is already existing. Cancelling..')
+    else:
+        if countryname:
+            WRITER.execute(f"INSERT INTO notifications VALUES ('{message.chat.id}', '{message.chat.username}', '{countryname}', '{now}')")
+            BOT.reply_to(message, f'Notification for {countryname} successfully added')
+        else:
+            BOT.register_next_step_handler(message, add_notification)
+
+
+@BOT.message_handler(content_types=["text"])
 def country_stats(message):
-    now = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
     language = language_check(message.chat.id)
-    c = conn.cursor()
-    with conn:
-        c.execute(f"""UPDATE users SET last_check='{now}' WHERE user_id=={message.chat.id}""")
-    with conn:
+    countryname = check_country(message)
+    if countryname:
         try:
-            *stats, = c.execute(f"SELECT * FROM countries WHERE country LIKE '%{message.text}%'").fetchone()
-            bot.send_message(message.chat.id, config.translations[language]["stats-per-country"].format(*stats), parse_mode="Markdown")
-        except TypeError:
-            bot.send_message(message.chat.id, config.translations[language]["wrong-country"])
+            update_user_checktime(message.chat.id)
+            *stats, = READER.execute(f"SELECT * FROM countries WHERE country=='{countryname}'").fetchone()
+            BOT.send_message(
+                message.chat.id,
+                config.TRANSLATIONS[language]["stats-per-country"].format(*stats),
+                parse_mode="Markdown"
+            )
+        except:
+            pass
 
 
-# @bot.message_handler(commands=['notif'])
-# def notification_set(message):
-#     now = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-#     language = language_check(message.chat.id)
-#     c = conn.cursor()
-#     with conn:
-#         c.execute(f"""UPDATE users SET last_check='{now}' WHERE user_id=={message.chat.id}""")
-#     with conn:
-#         try:
-#             *stats, = c.execute(f"SELECT * FROM countries WHERE country LIKE '%{message.text}%'").fetchone()
-#             bot.send_message(message.chat.id, config.translations[language]["stats-per-country"].format(*stats), parse_mode="Markdown")
-#         except TypeError:
-#             bot.send_message(message.chat.id, config.translations[language]["wrong-country"])
+def check_country(message):
+    """
+    Check country in the database.
+    """
+    language = language_check(message.chat.id)
+    try:
+        countryname = READER.execute(f"SELECT country FROM countries WHERE country LIKE '%{message.text}%' ORDER BY cases DESC").fetchone()
+        if not countryname[0]:
+            BOT.send_message(message.chat.id, config.TRANSLATIONS[language]["wrong-country"])
+            return None
+        return countryname[0]
+    except:
+        BOT.send_message(message.chat.id, config.TRANSLATIONS[language]["wrong-country"])
 
 
 def check_user(userid, username=None):
-    c = conn.cursor()
+    """
+    Check the user in the database.
+    In case it doesnt exist it will add it with ENG default language
+    """
     now = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-    with conn:
-        user = c.execute(f"""SELECT user_id FROM users WHERE user_id == '{userid}'""").fetchone()
+    user = READER.execute(f"SELECT user_id FROM users WHERE user_id=='{userid}'").fetchone()
     if not user:
-        with conn:
-            c.execute(f"INSERT INTO users VALUES ('{userid}', '{username}', '{time.strftime('%d-%m-%Y')}', '{now}', 'lang-en')")
-        logger.info(f"New user detected {userid}-{username}")
+        WRITER.execute(f"""INSERT INTO users VALUES (
+            '{userid}', '{username}',
+            '{time.strftime('%d-%m-%Y')}',
+            '{now}',
+            'lang-en')""")
+        LOGGER.info(f"New user detected {userid}-{username}")
 
 
 def main():
-    bot.infinity_polling(timeout=30)
+    BOT.infinity_polling(timeout=30)
 
 
 if __name__ == '__main__':
