@@ -14,3 +14,11 @@ In case you see any translation errors, please reach the developer (check comman
 ![](images/portugal.png)
 #### In case you want to check all available commands or just to send a "thank you" to the developer
 ![](images/help.png)
+
+## Data
+
+The worldwide case statistics are provided and regularly updated by [worldometers.info](https://www.worldometers.info/coronavirus/) and accessed through the [NovelCOVID REST API](https://github.com/NovelCovid/API).  
+Data is saved in the local database and updated once per 5 minutes to not overload the [API](https://github.com/NovelCovid/API) endpoint with telegram requests.
+
+## Donating
+<a href="https://www.buymeacoffee.com/maxtacu" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/default-black.png" alt="Buy Me A Coffee" style="height: 51px !important;width: 217px !important;" ></a>
