@@ -11,7 +11,7 @@ lang-en:
     *☠️ Deaths:*  {:,}
     *☘️ Recovered:*  {:,}
     *🤒 Active:*  {:,}
-    *⏰ Data updated:* {} UTC
+    *⏰ Data updated:* {} ago
     Check-out /help for more stats
   stats-per-country: |
     Detailed stats for *{}*
@@ -23,7 +23,7 @@ lang-en:
     *🚨 Critical cases:* {:,}
     *🤒 Active:*  {:,}
     *🧪 Tests made*: {:,}
-    *⏰ Data updated:* {} UTC
+    *⏰ Data updated:* {} ago
     Check-out /help for more stats
   wrong-country: Sorry! I'm not familiar with this country. Try to type another way
   help: |
@@ -50,7 +50,7 @@ lang-ru:
     *☠️ Смертей:*  {:,}
     *☘️ Вылечено:*  {:,}
     *🤒 Сущестующих:*  {:,}
-    *⏰ Данные обновлены:* {} UTC
+    *⏰ Данные обновлены:* {} назад
     Проверь /help для большей статистики
   stats-per-country: |
     Детальная статистика по *{}*
@@ -62,7 +62,7 @@ lang-ru:
     *🚨 В кричическом состоянии:* {:,}
     *🤒 Сущестующих:*  {:,}
     *🧪 Подозрений*: {:,}
-    *⏰ Данные обновлены:* {} UTC
+    *⏰ Данные обновлены:* {} назад
     Проверь /help для большей статистики
   wrong-country: Прошу прощения, мне такая страна не знакома. Попробуй написать иначе
   help: |
@@ -89,7 +89,7 @@ lang-pt:
     *☠️ Óbitos:*  {:,}
     *☘️ Recuperados:*  {:,}
     *🤒 Ativos:*  {:,}
-    *⏰ Atualizado:* {} UTC
+    *⏰ Atualizado:* {} atrás
     Confira /help para mais estatísticas
   stats-per-country: |
     Estatísticas detalhadas para *{}*
@@ -101,7 +101,7 @@ lang-pt:
     *🚨 Casos críticos:* {:,}
     *🤒 Ativos:*  {:,}
     *🧪 Amostras*: {:,}
-    *⏰ Atualizado:* {} UTC
+    *⏰ Atualizado:* {} atrás
     Confira /help para mais estatísticas
   wrong-country: Sorry! No such country. Try to type another way
   help: |
@@ -128,7 +128,7 @@ lang-ro:
     *☠️ Decedați:*  {:,}
     *☘️ Recuperați:*  {:,}
     *🤒 Activi:*  {:,}
-    *⏰ Actualizat:* {} UTC
+    *⏰ Actualizat:* {} în urmă
     Verifică /help pentru mai multă statistică
   stats-per-country: |
     Statistica detaliată pentru *{}*
@@ -140,7 +140,7 @@ lang-ro:
     *🚨 Cazuri critice:* {:,}
     *🤒 Activi:*  {:,}
     *🧪 Cazuri suspecte*: {:,}
-    *⏰ Actualizat:* {} UTC
+    *⏰ Actualizat:* {} în urmă
     Verifică /help pentru mai multă statistică
   wrong-country: Cer scuze, nu recunosc țara asta. Mai încearcă
   help: |
@@ -167,7 +167,7 @@ lang-es:
     *☠️ Defunciones:*  {:,}
     *☘️ Recuperados:*  {:,}
     *🤒 Activos:*  {:,}
-    *⏰ Datos actualizados:* {} UTC
+    *⏰ Datos actualizados:* hace {} 
     Revise /help para más estadísticas
   stats-per-country: |
     Estadísticas detalladas de *{}*
@@ -179,7 +179,7 @@ lang-es:
     *🚨 Casos críticos:* {:,}
     *🤒 Activos:*  {:,}
     *🧪 Tests realizados*: {:,}
-    *⏰ Datos actualizados:* {} UTC
+    *⏰ Datos actualizados:* hace {} 
     Revise /help para más estadísticas
   wrong-country: Perdón! No existe ese país. Intenta escribirlo de otra manera.
   help: |

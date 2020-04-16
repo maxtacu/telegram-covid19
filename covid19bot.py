@@ -4,7 +4,7 @@ import telebot
 import logging
 import sqlite3
 import time
-from datetime import datetime
+from datetime import datetime, timedelta
 import config
 
 
@@ -56,6 +56,9 @@ def iq_callback(query):
 
 
 def remove_notif(query):
+    """
+    Remove notification entry from the database
+    """
     try:
         WRITER.execute(f"DELETE FROM notifications WHERE user_id=={query.message.chat.id} AND country=='{query.message.text}'")
         BOT.answer_callback_query(query.id, "Notification successfully removed")
@@ -114,18 +117,28 @@ def update_user_checktime(user_id):
 def allstats(message):
     update_user_checktime(message.chat.id)
     language = language_check(message.chat.id)
-    *stats, = READER.execute("SELECT * FROM stats").fetchone()
+    stats = READER.execute("SELECT * FROM stats").fetchone()
+    stats = change_time_representation(stats)
     BOT.send_message(
         message.chat.id,
         config.TRANSLATIONS[language]["stats"].format(*stats), parse_mode="Markdown")
 
+def change_time_representation(data): # I expect time data as the last object
+    """
+    Calculates updated time as 'X ago' instead of fixed UTC time
+    """
+    data = list(data)   # change it to list to be able to update the value
+    data[-1] = datetime.now() - datetime.strptime(data[-1], "%Y-%m-%d %H:%M:%S")
+    data[-1] = data[-1] - timedelta(microseconds=data[-1].microseconds) # removing microseconds
+    data = tuple(data)  # change it back to tuple
+    return data
 
 @BOT.message_handler(commands=['topcases'])
 def top_confirmed(message):
     language = language_check(message.chat.id)
     top_stats_message = config.TRANSLATIONS[language]["topconfirmed"] + '\n\n'
     update_user_checktime(message.chat.id)
-    *stats, = READER.execute("SELECT country,cases FROM countries ORDER BY cases DESC LIMIT 10").fetchall()
+    stats = READER.execute("SELECT country,cases FROM countries ORDER BY cases DESC LIMIT 10").fetchall()
     for country in stats:
         top_stats_message += config.TRANSLATIONS["bycountry"].format(countryname=country[0], cases=country[1])
     BOT.send_message(message.chat.id, top_stats_message, parse_mode="Markdown")
@@ -136,7 +149,7 @@ def top_recovered(message):
     language = language_check(message.chat.id)
     top_stats_message = config.TRANSLATIONS[language]["toprecovered"] + '\n\n'
     update_user_checktime(message.chat.id)
-    *stats, = READER.execute("SELECT country,recovered FROM countries ORDER BY recovered DESC LIMIT 10").fetchall()
+    stats = READER.execute("SELECT country,recovered FROM countries ORDER BY recovered DESC LIMIT 10").fetchall()
     for country in stats:
         top_stats_message += config.TRANSLATIONS["bycountry"].format(countryname=country[0], cases=country[1])
     BOT.send_message(message.chat.id, top_stats_message, parse_mode="Markdown")
@@ -147,7 +160,7 @@ def top_deaths(message):
     language = language_check(message.chat.id)
     top_stats_message = config.TRANSLATIONS[language]["topdeaths"] + '\n\n'
     update_user_checktime(message.chat.id)
-    *stats, = READER.execute("SELECT country,deaths FROM countries ORDER BY deaths DESC LIMIT 10").fetchall()
+    stats = READER.execute("SELECT country,deaths FROM countries ORDER BY deaths DESC LIMIT 10").fetchall()
     for country in stats:
         top_stats_message += config.TRANSLATIONS["bycountry"].format(countryname=country[0], cases=country[1])
     BOT.send_message(message.chat.id, top_stats_message, parse_mode="Markdown")
@@ -222,7 +235,8 @@ def country_stats(message):
     if countryname:
         try:
             update_user_checktime(message.chat.id)
-            *stats, = READER.execute(f"SELECT * FROM countries WHERE country=='{countryname}'").fetchone()
+            stats = READER.execute(f"SELECT * FROM countries WHERE country=='{countryname}'").fetchone()
+            stats = change_time_representation(stats)
             BOT.send_message(
                 message.chat.id,
                 config.TRANSLATIONS[language]["stats-per-country"].format(*stats),
