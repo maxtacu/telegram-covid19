@@ -175,7 +175,7 @@ def notification_check(message):
         if not countries:
             BOT.send_message(
                 message.chat.id,
-                "No notifications are set. Type /setnotif to set notification for a specific country"
+                """No notifications are set. This feature is not working yet and is still under development"""
             )
             # BOT.register_next_step_handler(message, add_notification)
         else:
@@ -207,7 +207,7 @@ def notification_set(message):
     # language = language_check(message.chat.id)
     update_user_checktime(message.chat.id)
     try:
-        BOT.send_message(message.chat.id, "Type country name to set notification for")
+        BOT.send_message(message.chat.id, "Type country name to set notification for. This feature is not working yet and is still under development")
         BOT.register_next_step_handler(message, add_notification)
     except:
         BOT.send_message(message.chat.id, "An error occured. Try again")
