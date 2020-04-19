@@ -169,12 +169,13 @@ def top_deaths(message):
 
 @BOT.message_handler(commands=['graph'])
 def send_graph(message):
-    # language = language_check(message.chat.id)
+    language = language_check(message.chat.id)
     update_user_checktime(message.chat.id)
     try:
-        BOT.send_message(message.chat.id, "Type country name")
+        BOT.send_message(message.chat.id, config.TRANSLATIONS[language]["country-type"])
         BOT.register_next_step_handler(message, show_graph)
     except:
+
         BOT.send_message(message.chat.id, "An error occured. Try again")
 
 
