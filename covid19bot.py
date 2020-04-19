@@ -1,11 +1,13 @@
 #!/usr/bin/python
 
 import telebot
-import logging
+# import logging
 import sqlite3
 import time
 from datetime import datetime, timedelta
 import config
+import plotting
+import os
 
 
 BOT = telebot.TeleBot(config.TELEGRAM["token"])
@@ -14,11 +16,11 @@ WRITER.execute('pragma journal_mode=wal;') # write-ahead-logging (WAL)
 READER = sqlite3.connect(config.DATABASE["filename"], check_same_thread=False, isolation_level=None)
 READER.execute('pragma journal_mode=wal;') # write-ahead-logging (WAL)
 # Enable logging
-logging.basicConfig(
-    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
-    level=logging.INFO
-)
-LOGGER = logging.getLogger(__name__)
+# logging.basicConfig(
+#     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
+#     level=logging.INFO
+# )
+# LOGGER = logging.getLogger(__name__)
 
 
 @BOT.message_handler(commands=['start', 'help'])
@@ -166,6 +168,23 @@ def top_deaths(message):
     BOT.send_message(message.chat.id, top_stats_message, parse_mode="Markdown")
 
 
+@BOT.message_handler(commands=['graph'])
+def send_graph(message):
+    # language = language_check(message.chat.id)
+    update_user_checktime(message.chat.id)
+    try:
+        BOT.send_message(message.chat.id, "Type country name")
+        BOT.register_next_step_handler(message, show_graph)
+    except:
+        BOT.send_message(message.chat.id, "An error occured. Try again")
+
+
+def show_graph(message):
+    countryname = check_country(message)
+    photo = open(plotting.create_graph(countryname.lower()), 'rb')
+    BOT.send_photo(message.chat.id, photo)
+
+
 @BOT.message_handler(commands=['mynotif'])
 def notification_check(message):
     # language = language_check(message.chat.id)
@@ -278,6 +297,8 @@ def check_user(userid, username=None):
 
 
 def main():
+    if not os.path.exists('./plots'):
+        os.makedirs('./plots')
     BOT.infinity_polling(timeout=30)
 
 
