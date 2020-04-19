@@ -48,7 +48,7 @@ def create_graph(country):
             else:
                 deaths_y_offset = deaths_value+(max(confirmed_cases)*0.03)
                 recovered_y_offset = recovered_value-(max(confirmed_cases)*0.03)
-                
+
             plt.annotate(
                 str(deaths_value),
                 xy=(date, deaths_y_offset),
@@ -56,7 +56,7 @@ def create_graph(country):
                 fontweight=config.PLOT['fontweight'],
                 color='red',
                 horizontalalignment='center',
-                verticalalignment='top')
+                verticalalignment='center')
             plt.annotate(
                 str(recovered_value),
                 xy=(date, recovered_y_offset),
@@ -64,7 +64,7 @@ def create_graph(country):
                 fontweight=config.PLOT['fontweight'],
                 color='green',
                 horizontalalignment='center',
-                verticalalignment='bottom')
+                verticalalignment='center')
 
         plt.plot(dates, deaths, label="Deaths", color='red', linewidth=3, marker='o')
         plt.plot(dates, recovered, label="Recovered", color='green', linewidth=3, marker='o')
