@@ -4,3 +4,4 @@ start - Available commands and language setup
 topcases - Top 10 by confirmed cases
 toprecovered - Top 10 by recovered cases
 topdeaths - Top 10 by deaths
+graph - Show progress graph of a specific country

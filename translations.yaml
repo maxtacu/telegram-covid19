@@ -35,6 +35,7 @@ lang-en:
     /topcases - Top 10 by confirmed cases
     /toprecovered - Top 10 by recovered cases
     /topdeaths - Top 10 by deaths
+    /graph - Show graph of a specific country for the last 15 days
 
     Or you can *just message me the country name* and I will show you latest stats for that country.
   topconfirmed: Top *10* countries by *CONFIRMED* cases 🦠
@@ -74,6 +75,7 @@ lang-ru:
     /topcases - Топ 10 стран по общему количеству случаев
     /toprecovered - Топ 10 стран по количеству вылеченных
     /topdeaths - Топ 10 стран по количеству смертей
+    /graph - Показать график случаев по какой-либо стране за последние 15 дней
 
     Также чтобы увидеть статискику по желаемой стране, ты можешь просто отправить мне название страны на английском 
   topconfirmed: Топ *10* стран по количеству *ПОДTВЕРЖДЁННЫХ* случаев 🦠
@@ -113,6 +115,7 @@ lang-pt:
     /topcases - Os 10 países com mais casos Confirmados
     /toprecovered - Os 10 países com mais casos Recuperados
     /topdeaths - Os 10 países com mais Óbitos
+    /graph - Mostrar gráfico de um país específico durante os últimos 15 dias
 
     Ou pode escrever o nome do país e eu mostrarei as estatísticas apenas desse país
   topconfirmed: Os *10* países com um total de casos *CONFIRMADOS* 🦠
@@ -152,6 +155,7 @@ lang-ro:
     /topcases - Top 10 țări cu un numar total de cazuri
     /toprecovered - Top 10 țări cu un numar total de recuperați
     /topdeaths - Top 10 țări cu un numar total de decedați
+    /graph - Arată graficul unei țări pentru ultimele 15 zile
 
     De asemenea poți să-mi trimiți denumirea țării pentru a vedea datele referitoare la o țară anumită
   topconfirmed: Top *10* țări cu un numar total de cazuri *CONFIRMATE* 🦠
@@ -191,6 +195,9 @@ lang-es:
     /topcases - Los 10 países casos Confirmados
     /toprecovered - Los 10 países casos Recuperados
     /topdeaths - Los 10 países casos Defunciones
+    /graph - Mostrar gráfico de un país específico para los últimos 15 días
+
+    O puedes *enviarme el nombre del país* y te mostraré las últimas estadísticas de ese país.
   topconfirmed: Los *10* países con más casos *CONFIRMADOS* 🦠
   topdeaths: Los *10* paises con más *DEFUNCIONES* ☠️
   toprecovered: Los *10* países con más casos *RECUPERADOS* ☘️
