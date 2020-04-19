@@ -41,20 +41,25 @@ def create_graph(country):
                 horizontalalignment='center',
                 verticalalignment='bottom')
 
-        for date, cases_value in zip(dates, deaths):
+        for date, deaths_value, recovered_value in zip(dates, deaths, recovered):
+            if deaths_value < recovered_value:
+                deaths_y_offset = deaths_value-(max(confirmed_cases)*0.03)
+                recovered_y_offset = recovered_value+(max(confirmed_cases)*0.03)
+            else:
+                deaths_y_offset = deaths_value+(max(confirmed_cases)*0.03)
+                recovered_y_offset = recovered_value-(max(confirmed_cases)*0.03)
+                
             plt.annotate(
-                str(cases_value),
-                xy=(date, cases_value-(max(confirmed_cases)*0.03)),
+                str(deaths_value),
+                xy=(date, deaths_y_offset),
                 fontsize=config.PLOT['fontsize'],
                 fontweight=config.PLOT['fontweight'],
                 color='red',
                 horizontalalignment='center',
                 verticalalignment='top')
-
-        for date, cases_value in zip(dates, recovered):
             plt.annotate(
-                str(cases_value),
-                xy=(date, cases_value+(max(confirmed_cases)*0.03)),
+                str(recovered_value),
+                xy=(date, recovered_y_offset),
                 fontsize=config.PLOT['fontsize'],
                 fontweight=config.PLOT['fontweight'],
                 color='green',

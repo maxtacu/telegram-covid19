@@ -7,7 +7,6 @@ import time
 from datetime import datetime, timedelta
 import config
 import plotting
-import os
 
 
 BOT = telebot.TeleBot(config.TELEGRAM["token"])
