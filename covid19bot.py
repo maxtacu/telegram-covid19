@@ -1,7 +1,7 @@
 #!/usr/bin/python
 
 import telebot
-# import logging
+import logging
 import sqlite3
 import time
 from datetime import datetime, timedelta
@@ -16,11 +16,11 @@ WRITER.execute('pragma journal_mode=wal;') # write-ahead-logging (WAL)
 READER = sqlite3.connect(config.DATABASE["filename"], check_same_thread=False, isolation_level=None)
 READER.execute('pragma journal_mode=wal;') # write-ahead-logging (WAL)
 # Enable logging
-# logging.basicConfig(
-#     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
-#     level=logging.INFO
-# )
-# LOGGER = logging.getLogger(__name__)
+logging.basicConfig(
+    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
+    level=logging.INFO
+)
+LOGGER = logging.getLogger(__name__)
 
 
 @BOT.message_handler(commands=['start', 'help'])
@@ -181,8 +181,13 @@ def send_graph(message):
 
 def show_graph(message):
     countryname = check_country(message)
-    photo = open(plotting.create_graph(countryname.lower()), 'rb')
-    BOT.send_photo(message.chat.id, photo)
+    # plot = open(plotting.create_graph(countryname.lower()), 'rb')
+    try:
+        plot = plotting.create_graph(countryname.lower())
+        BOT.send_photo(message.chat.id, plot)
+        plot.close()
+    except:
+        BOT.send_message(message.chat.id, "An error occured. Try again")
 
 
 @BOT.message_handler(commands=['mynotif'])
@@ -297,8 +302,6 @@ def check_user(userid, username=None):
 
 
 def main():
-    if not os.path.exists('./plots'):
-        os.makedirs('./plots')
     BOT.infinity_polling(timeout=30)
 
 
