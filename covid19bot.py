@@ -170,19 +170,28 @@ def top_deaths(message):
 @BOT.message_handler(commands=['graph'])
 def send_graph(message):
     language = language_check(message.chat.id)
+    country_arg = extract_arg(message.text)
     update_user_checktime(message.chat.id)
     try:
-        BOT.send_message(message.chat.id, config.TRANSLATIONS[language]["country-type"])
-        BOT.register_next_step_handler(message, show_graph)
+        if country_arg:
+            countryname = check_country(message, country_arg[0])
+            plot = plotting.create_graph(countryname.lower())
+            BOT.send_photo(message.chat.id, plot)
+            plot.close()
+        else:
+            BOT.send_message(message.chat.id, config.TRANSLATIONS[language]["country-type"])
+            BOT.register_next_step_handler(message, show_graph)
     except:
-
         BOT.send_message(message.chat.id, "An error occured. Try again")
 
 
+def extract_arg(arg):
+    return arg.split()[1:]
+
+
 def show_graph(message):
-    countryname = check_country(message)
-    # plot = open(plotting.create_graph(countryname.lower()), 'rb')
     try:
+        countryname = check_country(message)
         plot = plotting.create_graph(countryname.lower())
         BOT.send_photo(message.chat.id, plot)
         plot.close()
@@ -270,13 +279,16 @@ def country_stats(message):
             pass
 
 
-def check_country(message):
+def check_country(message, text=None):
     """
     Check country in the database.
     """
     language = language_check(message.chat.id)
     try:
-        countryname = READER.execute(f"SELECT country FROM countries WHERE country LIKE '%{message.text}%' ORDER BY cases DESC").fetchone()
+        if text:
+            countryname = READER.execute(f"SELECT country FROM countries WHERE country LIKE '%{text}%' ORDER BY cases DESC").fetchone()
+        else:
+            countryname = READER.execute(f"SELECT country FROM countries WHERE country LIKE '%{message.text}%' ORDER BY cases DESC").fetchone()
         if not countryname[0]:
             BOT.send_message(message.chat.id, config.TRANSLATIONS[language]["wrong-country"])
             return None
