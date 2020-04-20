@@ -190,7 +190,7 @@ lang-es:
     *⏰ Datos actualizados:* hace {} 
     Revise /help para más estadísticas
   wrong-country: Perdón! No existe ese país. Intenta escribirlo de otra manera.
-  country-type: Enviarme el nombre del país (em Inglés)
+  country-type: Enviarme el nombre del país (en Inglés)
   help: |
     Te mostraré las estadísticas actuales de COVID-19 en todo el mundo
     
