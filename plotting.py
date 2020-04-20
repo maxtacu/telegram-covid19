@@ -39,7 +39,7 @@ def create_graph(country):
                 fontsize=config.PLOT['fontsize'],
                 fontweight=config.PLOT['fontweight'],
                 horizontalalignment='center',
-                verticalalignment='bottom')
+                verticalalignment='center')
 
         for date, deaths_value, recovered_value in zip(dates, deaths, recovered):
             if deaths_value < recovered_value:
