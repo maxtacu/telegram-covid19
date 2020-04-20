@@ -7,16 +7,23 @@ from datetime import datetime
 import config
 from io import BytesIO
 from threading import Lock
+import sqlite3
 
 matplotlib.use('Agg')
 LOCK = Lock()
+READER = sqlite3.connect(config.DATABASE["filename"], check_same_thread=False, isolation_level=None)
 
+def check_today_cases(countryname):
+    cases, deaths, recovered = READER.execute(
+        f"SELECT cases, deaths, recovered FROM countries WHERE country LIKE '%{countryname}%'").fetchone()
+    return int(cases), int(deaths), int(recovered)
 
 def create_graph(country):
     with LOCK:
         plt.figure(figsize=(10, 8))
         response = requests.get(f"https://corona.lmao.ninja/v2/historical/{country}?lastdays=15")
         data = response.json()
+        updated_cases, updated_deaths, updated_recovered = check_today_cases(country)
         confirmed_cases = []
         dates = []
         deaths = []
@@ -31,6 +38,12 @@ def create_graph(country):
 
         for date, cases in data['timeline']['recovered'].items():
             recovered.append(int(cases))
+
+        if recovered[-1] < updated_recovered or deaths[-1] < updated_deaths or confirmed_cases[-1] < updated_cases:
+            deaths.append(updated_deaths)
+            confirmed_cases.append(updated_cases)
+            recovered.append(updated_recovered)
+            dates.append(datetime.today().replace(hour=0, minute=0, second=0, microsecond=0))
 
         for date, cases_value in zip(dates, confirmed_cases):
             plt.annotate(
@@ -88,3 +101,5 @@ def create_graph(country):
         plt.savefig(in_memory_buffer, format="png", dpi=300)
         in_memory_buffer.seek(0)
         return in_memory_buffer
+
+# create_graph('moldova')
