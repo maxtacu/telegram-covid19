@@ -61,7 +61,8 @@ def remove_notif(query):
     Remove notification entry from the database
     """
     try:
-        WRITER.execute(f"DELETE FROM notifications WHERE user_id=={query.message.chat.id} AND country=='{query.message.text}'")
+        WRITER.execute(
+            f"DELETE FROM notifications WHERE user_id=={query.message.chat.id} AND country=='{query.message.text}'")
         BOT.answer_callback_query(query.id, "Notification successfully removed")
     except:
         BOT.answer_callback_query(query.id, "An error occured. Try again")
@@ -139,7 +140,8 @@ def top_confirmed(message):
     language = language_check(message.chat.id)
     top_stats_message = config.TRANSLATIONS[language]["topconfirmed"] + '\n\n'
     update_user_checktime(message.chat.id)
-    stats = READER.execute("SELECT country,cases FROM countries ORDER BY cases DESC LIMIT 10").fetchall()
+    stats = READER.execute(
+        "SELECT country,cases FROM countries ORDER BY cases DESC LIMIT 10").fetchall()
     for country in stats:
         top_stats_message += config.TRANSLATIONS["bycountry"].format(countryname=country[0], cases=country[1])
     BOT.send_message(message.chat.id, top_stats_message, parse_mode="Markdown")
@@ -150,7 +152,8 @@ def top_recovered(message):
     language = language_check(message.chat.id)
     top_stats_message = config.TRANSLATIONS[language]["toprecovered"] + '\n\n'
     update_user_checktime(message.chat.id)
-    stats = READER.execute("SELECT country,recovered FROM countries ORDER BY recovered DESC LIMIT 10").fetchall()
+    stats = READER.execute(
+        "SELECT country,recovered FROM countries ORDER BY recovered DESC LIMIT 10").fetchall()
     for country in stats:
         top_stats_message += config.TRANSLATIONS["bycountry"].format(countryname=country[0], cases=country[1])
     BOT.send_message(message.chat.id, top_stats_message, parse_mode="Markdown")
@@ -161,7 +164,8 @@ def top_deaths(message):
     language = language_check(message.chat.id)
     top_stats_message = config.TRANSLATIONS[language]["topdeaths"] + '\n\n'
     update_user_checktime(message.chat.id)
-    stats = READER.execute("SELECT country,deaths FROM countries ORDER BY deaths DESC LIMIT 10").fetchall()
+    stats = READER.execute(
+        "SELECT country,deaths FROM countries ORDER BY deaths DESC LIMIT 10").fetchall()
     for country in stats:
         top_stats_message += config.TRANSLATIONS["bycountry"].format(countryname=country[0], cases=country[1])
     BOT.send_message(message.chat.id, top_stats_message, parse_mode="Markdown")
@@ -204,7 +208,8 @@ def notification_check(message):
     # language = language_check(message.chat.id)
     update_user_checktime(message.chat.id)
     try:
-        countries = READER.execute(f"SELECT country FROM notifications WHERE user_id=={message.chat.id}").fetchall()
+        countries = READER.execute(
+            f"SELECT country FROM notifications WHERE user_id=={message.chat.id}").fetchall()
         if not countries:
             BOT.send_message(
                 message.chat.id,
@@ -240,7 +245,7 @@ def notification_set(message):
     # language = language_check(message.chat.id)
     update_user_checktime(message.chat.id)
     try:
-        BOT.send_message(message.chat.id, "Type country name to set notification for. This feature is not working yet and is still under development")
+        BOT.send_message(message.chat.id, "This feature is not working yet and is still under development")
         BOT.register_next_step_handler(message, add_notification)
     except:
         BOT.send_message(message.chat.id, "An error occured. Try again")
@@ -250,12 +255,14 @@ def add_notification(message):
     now = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
     # language = language_check(message.chat.id)
     countryname = check_country(message)
-    notif_exists = READER.execute(f"SELECT country FROM notifications WHERE country=='{countryname}' AND user_id=={message.chat.id}").fetchone()
+    notif_exists = READER.execute(
+        f"SELECT country FROM notifications WHERE country=='{countryname}' AND user_id=={message.chat.id}").fetchone()
     if notif_exists:
         BOT.send_message(message.chat.id, f'Notification for {countryname} is already existing. Cancelling..')
     else:
         if countryname:
-            WRITER.execute(f"INSERT INTO notifications VALUES ('{message.chat.id}', '{message.chat.username}', '{countryname}', '{now}')")
+            WRITER.execute(
+                f"INSERT INTO notifications VALUES ('{message.chat.id}', '{message.chat.username}', '{countryname}', '{now}')")
             BOT.reply_to(message, f'Notification for {countryname} successfully added')
         else:
             BOT.register_next_step_handler(message, add_notification)
@@ -268,7 +275,8 @@ def country_stats(message):
     if countryname:
         try:
             update_user_checktime(message.chat.id)
-            stats = READER.execute(f"SELECT * FROM countries WHERE country=='{countryname}'").fetchone()
+            stats = READER.execute(
+                f"SELECT * FROM countries WHERE country=='{countryname}'").fetchone()
             stats = change_time_representation(stats)
             BOT.send_message(
                 message.chat.id,
@@ -286,9 +294,11 @@ def check_country(message, text=None):
     language = language_check(message.chat.id)
     try:
         if text:
-            countryname = READER.execute(f"SELECT country FROM countries WHERE country LIKE '%{text}%' ORDER BY cases DESC").fetchone()
+            countryname = READER.execute(
+                f"SELECT country FROM countries WHERE country LIKE '%{text}%' ORDER BY cases DESC").fetchone()
         else:
-            countryname = READER.execute(f"SELECT country FROM countries WHERE country LIKE '%{message.text}%' ORDER BY cases DESC").fetchone()
+            countryname = READER.execute(
+                f"SELECT country FROM countries WHERE country LIKE '%{message.text}%' ORDER BY cases DESC").fetchone()
         if not countryname[0]:
             BOT.send_message(message.chat.id, config.TRANSLATIONS[language]["wrong-country"])
             return None
