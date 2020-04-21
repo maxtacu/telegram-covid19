@@ -45,10 +45,15 @@ def iq_callback(query):
     """
     Callback query handler
     """
+    language = language_check(query.message.chat.id)
     if query.data.startswith('lang-'):
         user_language_update(query.data, query.message.chat.id)
-        language = language_check(query.message.chat.id)
         BOT.answer_callback_query(query.id, config.TRANSLATIONS[language]["pick"])
+    if query.data.startswith('graph-'):
+        countryname = query.data.replace('graph-', '')
+        BOT.answer_callback_query(query.id, config.TRANSLATIONS[language]["show-graph-alert"])
+        graph = show_graph_query(countryname)
+        BOT.send_photo(query.message.chat.id, graph)
     if query.data.startswith('notif-'):
         if query.data == 'notif-remove':
             remove_notif(query)
@@ -202,6 +207,11 @@ def show_graph(message):
         BOT.send_message(message.chat.id, "An error occured. Try again")
 
 
+def show_graph_query(countryname):
+    plot = plotting.create_graph(countryname.lower())
+    return plot
+
+
 @BOT.message_handler(commands=['mynotif'])
 def notification_check(message):
     # language = language_check(message.chat.id)
@@ -269,18 +279,26 @@ def add_notification(message):
 
 @BOT.message_handler(content_types=["text"])
 def country_stats(message):
+    LOGGER.info(f"{message.chat.id}-text-{message.text}")
     language = language_check(message.chat.id)
     countryname = check_country(message)
+    keyboard = telebot.types.InlineKeyboardMarkup()
     if countryname:
         try:
             update_user_checktime(message.chat.id)
             stats = READER.execute(
                 f"SELECT * FROM countries WHERE country=='{countryname}'").fetchone()
             stats = change_time_representation(stats)
+            keyboard.add(
+                telebot.types.InlineKeyboardButton(
+                    config.TRANSLATIONS[language]["show-graph"],
+                    callback_data=f'graph-{countryname}')
+            )
             BOT.send_message(
                 message.chat.id,
                 config.TRANSLATIONS[language]["stats-per-country"].format(*stats),
-                parse_mode="Markdown"
+                parse_mode="Markdown",
+                reply_markup=keyboard
             )
         except:
             pass
