@@ -198,7 +198,6 @@ def show_graph(message):
         countryname = check_country(message)
         plot = plotting.create_graph(countryname.lower())
         BOT.send_photo(message.chat.id, plot)
-        plot.close()
     except:
         BOT.send_message(message.chat.id, "An error occured. Try again")
 

@@ -100,6 +100,7 @@ def create_graph(country):
         in_memory_buffer = BytesIO()
         plt.savefig(in_memory_buffer, format="png", dpi=300)
         in_memory_buffer.seek(0)
+        plt.close()
         return in_memory_buffer
 
 # create_graph('moldova')
