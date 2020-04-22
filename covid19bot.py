@@ -122,13 +122,21 @@ def update_user_checktime(user_id):
 
 @BOT.message_handler(commands=['stats'])
 def allstats(message):
+    keyboard = telebot.types.InlineKeyboardMarkup()
     update_user_checktime(message.chat.id)
     language = language_check(message.chat.id)
     stats = READER.execute("SELECT * FROM stats").fetchone()
     stats = change_time_representation(stats)
+    keyboard.add(
+        telebot.types.InlineKeyboardButton(
+            config.TRANSLATIONS[language]["show-graph"],
+            callback_data=f'graph-all')
+        )
     BOT.send_message(
         message.chat.id,
-        config.TRANSLATIONS[language]["stats"].format(*stats), parse_mode="Markdown")
+        config.TRANSLATIONS[language]["stats"].format(*stats),
+        parse_mode="Markdown",
+        reply_markup=keyboard)
 
 def change_time_representation(data): # I expect time data as the last object
     """
@@ -184,7 +192,7 @@ def send_graph(message):
     try:
         if country_arg:
             countryname = check_country(message, country_arg[0])
-            plot = plotting.create_graph(countryname.lower())
+            plot = plotting.create_graph(countryname)
             BOT.send_photo(message.chat.id, plot)
             plot.close()
         else:
@@ -201,14 +209,17 @@ def extract_arg(arg):
 def show_graph(message):
     try:
         countryname = check_country(message)
-        plot = plotting.create_graph(countryname.lower())
+        plot = plotting.create_graph(countryname)
         BOT.send_photo(message.chat.id, plot)
     except:
         BOT.send_message(message.chat.id, "An error occured. Try again")
 
 
 def show_graph_query(countryname):
-    plot = plotting.create_graph(countryname.lower())
+    if countryname == 'all':
+        plot = plotting.create_graph('all')
+    else:
+        plot = plotting.create_graph(countryname)
     return plot
 
 

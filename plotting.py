@@ -18,25 +18,42 @@ def check_today_cases(countryname):
         f"SELECT cases, deaths, recovered FROM countries WHERE country LIKE '%{countryname}%'").fetchone()
     return int(cases), int(deaths), int(recovered)
 
+
+def check_today_cases_all():
+    cases, deaths, recovered = READER.execute(
+        f"SELECT cases, deaths, recovered FROM stats").fetchone()
+    return int(cases), int(deaths), int(recovered)
+
+
 def create_graph(country):
     with LOCK:
         plt.figure(figsize=(10, 8))
         response = requests.get(f"https://corona.lmao.ninja/v2/historical/{country}?lastdays=15")
         data = response.json()
-        updated_cases, updated_deaths, updated_recovered = check_today_cases(country)
         confirmed_cases = []
         dates = []
         deaths = []
         recovered = []
-        for date, cases in data['timeline']['cases'].items():
+
+        if country == 'all':
+            plt.figure(figsize=(13, 11))
+            updated_cases, updated_deaths, updated_recovered = check_today_cases_all()
+            plt.title('Worldwide', fontweight=config.PLOT['fontweight'], fontsize=22)
+        else:
+            plt.figure(figsize=(10, 8))
+            updated_cases, updated_deaths, updated_recovered = check_today_cases(country)
+            data = data['timeline']
+            plt.title(country, fontweight=config.PLOT['fontweight'], fontsize=22)
+
+        for date, cases in data['cases'].items():
             date = datetime.strptime(date, '%m/%d/%y')
             dates.append(date)
             confirmed_cases.append(int(cases))
 
-        for date, cases in data['timeline']['deaths'].items():
+        for date, cases in data['deaths'].items():
             deaths.append(int(cases))
 
-        for date, cases in data['timeline']['recovered'].items():
+        for date, cases in data['recovered'].items():
             recovered.append(int(cases))
 
         if recovered[-1] < updated_recovered or deaths[-1] < updated_deaths or confirmed_cases[-1] < updated_cases:
@@ -89,7 +106,6 @@ def create_graph(country):
 
         plt.grid(True) # show grid on the plot
         plt.xticks(dates, rotation=45)
-        plt.title(data['country'], fontweight=config.PLOT['fontweight'])
         # naming the x axis
         plt.xlabel('Dates')
         # naming the y axis
@@ -102,5 +118,3 @@ def create_graph(country):
         in_memory_buffer.seek(0)
         plt.close()
         return in_memory_buffer
-
-# create_graph('moldova')
