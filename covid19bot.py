@@ -24,6 +24,7 @@ LOGGER = logging.getLogger(__name__)
 
 @BOT.message_handler(commands=['start', 'help'])
 def start(message):
+    LOGGER.info(f"{message.chat.id}-{message.chat.username}-command:{message.text}")
     check_user(message.chat.id, message.chat.username)
     language = language_check(message.chat.id)
     help_text = config.TRANSLATIONS[language]["help"]
@@ -122,6 +123,7 @@ def update_user_checktime(user_id):
 
 @BOT.message_handler(commands=['stats'])
 def allstats(message):
+    LOGGER.info(f"{message.chat.id}-{message.chat.username}-command:{message.text}")
     keyboard = telebot.types.InlineKeyboardMarkup()
     update_user_checktime(message.chat.id)
     language = language_check(message.chat.id)
@@ -150,6 +152,7 @@ def change_time_representation(data): # I expect time data as the last object
 
 @BOT.message_handler(commands=['topcases'])
 def top_confirmed(message):
+    LOGGER.info(f"{message.chat.id}-{message.chat.username}-command:{message.text}")
     language = language_check(message.chat.id)
     top_stats_message = config.TRANSLATIONS[language]["topconfirmed"] + '\n\n'
     update_user_checktime(message.chat.id)
@@ -162,6 +165,7 @@ def top_confirmed(message):
 
 @BOT.message_handler(commands=['toprecovered'])
 def top_recovered(message):
+    LOGGER.info(f"{message.chat.id}-{message.chat.username}-command:{message.text}")
     language = language_check(message.chat.id)
     top_stats_message = config.TRANSLATIONS[language]["toprecovered"] + '\n\n'
     update_user_checktime(message.chat.id)
@@ -174,6 +178,7 @@ def top_recovered(message):
 
 @BOT.message_handler(commands=['topdeaths'])
 def top_deaths(message):
+    LOGGER.info(f"{message.chat.id}-{message.chat.username}-command:{message.text}")
     language = language_check(message.chat.id)
     top_stats_message = config.TRANSLATIONS[language]["topdeaths"] + '\n\n'
     update_user_checktime(message.chat.id)
@@ -186,6 +191,7 @@ def top_deaths(message):
 
 @BOT.message_handler(commands=['graph'])
 def send_graph(message):
+    LOGGER.info(f"{message.chat.id}-{message.chat.username}-command:{message.text}")
     language = language_check(message.chat.id)
     country_arg = extract_arg(message.text)
     update_user_checktime(message.chat.id)
@@ -290,7 +296,7 @@ def add_notification(message):
 
 @BOT.message_handler(content_types=["text"])
 def country_stats(message):
-    LOGGER.info(f"{message.chat.id}-{message.chat.username}-text-{message.text}")
+    LOGGER.info(f"{message.chat.id}-{message.chat.username}-text:{message.text}")
     language = language_check(message.chat.id)
     countryname = check_country(message)
     keyboard = telebot.types.InlineKeyboardMarkup()
