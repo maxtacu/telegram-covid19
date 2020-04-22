@@ -16,7 +16,7 @@ READER = sqlite3.connect(config.DATABASE["filename"], check_same_thread=False, i
 READER.execute('pragma journal_mode=wal;') # write-ahead-logging (WAL)
 # Enable logging
 logging.basicConfig(
-    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
+    format='%(asctime)s - %(levelname)s - %(message)s',
     level=logging.INFO
 )
 LOGGER = logging.getLogger(__name__)
@@ -279,7 +279,7 @@ def add_notification(message):
 
 @BOT.message_handler(content_types=["text"])
 def country_stats(message):
-    LOGGER.info(f"{message.chat.id}-text-{message.text}")
+    LOGGER.info(f"{message.chat.id}-{message.chat.username}-text-{message.text}")
     language = language_check(message.chat.id)
     countryname = check_country(message)
     keyboard = telebot.types.InlineKeyboardMarkup()
