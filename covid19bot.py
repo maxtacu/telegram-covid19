@@ -55,6 +55,11 @@ def iq_callback(query):
         BOT.answer_callback_query(query.id, config.TRANSLATIONS[language]["show-graph-alert"])
         graph = show_graph_query(countryname)
         BOT.send_photo(query.message.chat.id, graph)
+    if query.data.startswith('graphperday-'):
+        countryname = query.data.replace('graphperday-', '')
+        BOT.answer_callback_query(query.id, config.TRANSLATIONS[language]["show-graph-alert"])
+        graph = show_graph_perday_query(countryname)
+        BOT.send_photo(query.message.chat.id, graph)
     if query.data.startswith('notif-'):
         if query.data == 'notif-remove':
             remove_notif(query)
@@ -129,10 +134,13 @@ def allstats(message):
     language = language_check(message.chat.id)
     stats = READER.execute("SELECT * FROM stats").fetchone()
     stats = change_time_representation(stats)
-    keyboard.add(
+    keyboard.row(
         telebot.types.InlineKeyboardButton(
             config.TRANSLATIONS[language]["show-graph"],
-            callback_data=f'graph-all')
+            callback_data=f'graph-all'),
+        telebot.types.InlineKeyboardButton(
+            "Cases per day",
+            callback_data=f'graphperday-all')
         )
     BOT.send_message(
         message.chat.id,
@@ -198,7 +206,7 @@ def send_graph(message):
     try:
         if country_arg:
             countryname = check_country(message, country_arg[0])
-            plot = plotting.create_graph(countryname)
+            plot = plotting.history_graph(countryname)
             BOT.send_photo(message.chat.id, plot)
             plot.close()
         else:
@@ -215,7 +223,7 @@ def extract_arg(arg):
 def show_graph(message):
     try:
         countryname = check_country(message)
-        plot = plotting.create_graph(countryname)
+        plot = plotting.history_graph(countryname)
         BOT.send_photo(message.chat.id, plot)
     except:
         BOT.send_message(message.chat.id, "An error occured. Try again")
@@ -223,11 +231,17 @@ def show_graph(message):
 
 def show_graph_query(countryname):
     if countryname == 'all':
-        plot = plotting.create_graph('all')
+        plot = plotting.history_graph('all')
     else:
-        plot = plotting.create_graph(countryname)
+        plot = plotting.history_graph(countryname)
     return plot
 
+def show_graph_perday_query(countryname):
+    if countryname == 'all':
+        plot = plotting.graph_per_day('all')
+    else:
+        plot = plotting.graph_per_day(countryname)
+    return plot
 
 @BOT.message_handler(commands=['mynotif'])
 def notification_check(message):
@@ -306,10 +320,13 @@ def country_stats(message):
             stats = READER.execute(
                 f"SELECT * FROM countries WHERE country=='{countryname}'").fetchone()
             stats = change_time_representation(stats)
-            keyboard.add(
+            keyboard.row(
                 telebot.types.InlineKeyboardButton(
                     config.TRANSLATIONS[language]["show-graph"],
-                    callback_data=f'graph-{countryname}')
+                    callback_data=f'graph-{countryname}'),
+                telebot.types.InlineKeyboardButton(
+                    "Cases per day",
+                    callback_data=f'graphperday-{countryname}')
             )
             BOT.send_message(
                 message.chat.id,
