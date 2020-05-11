@@ -52,12 +52,14 @@ def iq_callback(query):
         BOT.answer_callback_query(query.id, config.TRANSLATIONS[language]["pick"])
     if query.data.startswith('graph-'):
         countryname = query.data.replace('graph-', '')
-        BOT.answer_callback_query(query.id, config.TRANSLATIONS[language]["show-graph-alert"])
+        callback_answer = config.TRANSLATIONS[language]["show-graph-alert"].format(15)
+        BOT.answer_callback_query(query.id, callback_answer)
         graph = show_graph_query(countryname)
         BOT.send_photo(query.message.chat.id, graph)
     if query.data.startswith('graphperday-'):
         countryname = query.data.replace('graphperday-', '')
-        BOT.answer_callback_query(query.id, config.TRANSLATIONS[language]["show-graph-alert"])
+        callback_answer = config.TRANSLATIONS[language]["show-graph-alert"].format(30)
+        BOT.answer_callback_query(query.id, callback_answer)
         graph = show_graph_perday_query(countryname)
         BOT.send_photo(query.message.chat.id, graph)
     if query.data.startswith('notif-'):

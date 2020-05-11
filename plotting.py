@@ -134,17 +134,16 @@ def history_graph(country):
 
 def graph_per_day(country):
     with LOCK:
-        plt.figure(figsize=(10, 8))
-        data = official_stats(country, 16).json()
+        data = official_stats(country, 30).json()
         confirmed_cases = []
         dates = []
 
         if country == 'all':
-            plt.figure(figsize=(13, 11))
+            plt.figure(figsize=(15, 11))
             updated_cases, _, _ = check_today_cases_all()
             plt.title('Worldwide', fontweight=config.PLOT['fontweight'], fontsize=22)
         else:
-            plt.figure(figsize=(10, 8))
+            plt.figure(figsize=(15, 8))
             updated_cases, _, _ = check_today_cases(country)
             data = data['timeline']
             plt.title(country, fontweight=config.PLOT['fontweight'], fontsize=22)
