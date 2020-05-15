@@ -1,0 +1,5 @@
+# update data in the database every 5 minutes
+*/5 * * * * cd /home/mtacu/telegram-covid19 && python dbcron.py >> cron.log
+
+# restart bot once per day
+0 12 * * * sudo service covid19bot restart

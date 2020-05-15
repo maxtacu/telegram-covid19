@@ -1,0 +1,16 @@
+[Unit]
+Description=Telegram COVID19 Bot
+After=syslog.target
+[Service]
+Type=simple
+User=mtacu
+Group=mtacu
+WorkingDirectory=/home/mtacu/telegram-covid19
+ExecStart=/home/mtacu/telegram-covid19/covid19bot.py
+Environment="TOKEN=TOKEN-FROM-BOTFATHER"
+StandardOutput=syslog
+StandardError=syslog
+Restart=always
+RestartSec=5s
+[Install]
+WantedBy=multi-user.target
