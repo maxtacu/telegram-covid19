@@ -377,7 +377,7 @@ def check_user(userid, username=None):
 
 
 def main():
-    BOT.infinity_polling(timeout=30)
+    BOT.infinity_polling(timeout=40)
 
 
 if __name__ == '__main__':
