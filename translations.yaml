@@ -8,8 +8,11 @@ lang-en:
   pick: You picked English 
   stats: |
     *🦠 Total cases:*  {:,}
+    *🦠 Today cases:*  {:,}
     *☠️ Deaths:*  {:,}
+    *☠️ Today Deaths:*  {:,}
     *☘️ Recovered:*  {:,}
+    *☘️ Today Recovered:*  {:,}
     *🤒 Active:*  {:,}
     *⏰ Data updated:* {} ago
     Check-out /help for more stats
@@ -51,8 +54,11 @@ lang-ru:
   pick: Выбран Русский язык
   stats: |
     *🦠 Всего случаев:*  {:,}
+    *🦠 Случаев сегодня:*  {:,}
     *☠️ Смертей:*  {:,}
+    *☠️ Смертей сегодня:*  {:,}
     *☘️ Выздоровели:*  {:,}
+    *☘️ Выздоровели сегодня:*  {:,}
     *🤒 Больных в настоящий момент:*  {:,}
     *⏰ Данные обновлены:* {} назад
     Проверь /help для большей статистики
@@ -94,8 +100,11 @@ lang-pt:
   pick: Você escolheu o português
   stats: |
     *🦠 Confirmados:*  {:,}
+    *🦠 Confirmados hoje:*  {:,}
     *☠️ Óbitos:*  {:,}
+    *☠️ Óbitos hoje:*  {:,}
     *☘️ Recuperados:*  {:,}
+    *☘️ Recuperados hoje:*  {:,}
     *🤒 Ativos:*  {:,}
     *⏰ Atualizado:* {} atrás
     Confira /help para mais estatísticas
@@ -137,8 +146,11 @@ lang-ro:
   pick: Ai ales română
   stats: |
     *🦠 Confirmate:*  {:,}
+    *🦠 Confirmate astazi:*  {:,}
     *☠️ Decedați:*  {:,}
+    *☠️ Decedați astazi:*  {:,}
     *☘️ Recuperați:*  {:,}
+    *☘️ Recuperați astazi:*  {:,}
     *🤒 Activi:*  {:,}
     *⏰ Actualizat:* {} în urmă
     Verifică /help pentru mai multă statistică
@@ -180,8 +192,11 @@ lang-es:
   pick: Elegiste español
   stats: |
     *🦠 Casos totales:*  {:,}
+    *🦠 Casos hoy en día:*  {:,}
     *☠️ Defunciones:*  {:,}
+    *☠️ Defunciones hoy en día:*  {:,}
     *☘️ Recuperados:*  {:,}
+    *☘️ Recuperados hoy en día:*  {:,}
     *🤒 Activos:*  {:,}
     *⏰ Datos actualizados:* hace {} 
     Revise /help para más estadísticas

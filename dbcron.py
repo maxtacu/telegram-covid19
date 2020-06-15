@@ -15,8 +15,11 @@ def global_stats():
     WRITER.execute("DELETE FROM stats")
     WRITER.execute(f"""INSERT INTO stats VALUES (
                     '{data['cases']}', 
-                    '{data['deaths']}', 
-                    '{data['recovered']}', 
+                    '{data['todayCases']}', 
+                    '{data['deaths']}',
+                    '{data['todayDeaths']}',
+                    '{data['recovered']}',
+                    '{data['todayRecovered']}',
                     '{data['active']}',
                     '{convert_updated(data['updated'])}')""")
 

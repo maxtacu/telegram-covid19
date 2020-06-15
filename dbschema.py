@@ -5,8 +5,11 @@ WRITER = sqlite3.connect(config.DATABASE["filename"], isolation_level=None)
 
 WRITER.execute("""CREATE TABLE IF NOT EXISTS stats (
             cases INTEGER,
+            todayCases INTEGER,
             deaths INTEGER,
+            todayDeaths INTEGER,
             recovered INTEGER,
+            todayRecovered INTEGER,
             active INTEGER,
             updated TEXT
         )""")

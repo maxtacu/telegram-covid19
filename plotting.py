@@ -15,14 +15,18 @@ LOCK = Lock()
 READER = sqlite3.connect(config.DATABASE["filename"], check_same_thread=False, isolation_level=None)
 
 def check_today_cases(countryname):
-    cases, deaths, recovered = READER.execute(
-        f"SELECT cases, deaths, recovered FROM countries WHERE country LIKE '%{countryname}%'").fetchone()
-    return int(cases), int(deaths), int(recovered)
+    cases = READER.execute(
+        f"SELECT todayCases FROM countries WHERE country LIKE '%{countryname}%'").fetchone()[0]
+    return int(cases)
 
 
-def check_today_cases_all():
-    cases, deaths, recovered = READER.execute(
-        f"SELECT cases, deaths, recovered FROM stats").fetchone()
+def check_today_cases_all(countryname='all'):
+    if countryname == 'all':
+        cases, deaths, recovered = READER.execute(
+            f"SELECT cases, deaths, recovered FROM stats").fetchone()
+    else:
+        cases, deaths, recovered = READER.execute(
+            f"SELECT cases, deaths, recovered FROM countries WHERE country LIKE '%{countryname}%'").fetchone()
     return int(cases), int(deaths), int(recovered)
 
 def official_stats(country, days):
@@ -41,11 +45,11 @@ def history_graph(country):
 
         if country == 'all':
             plt.figure(figsize=(13, 11))
-            updated_cases, updated_deaths, updated_recovered = check_today_cases_all()
+            updated_cases, updated_deaths, updated_recovered = check_today_cases_all('all')
             plt.title('Worldwide', fontweight=config.PLOT['fontweight'], fontsize=22)
         else:
             plt.figure(figsize=(10, 8))
-            updated_cases, updated_deaths, updated_recovered = check_today_cases(country)
+            updated_cases = check_today_cases(country)
             data = data['timeline']
             plt.title(country, fontweight=config.PLOT['fontweight'], fontsize=22)
 
@@ -141,11 +145,11 @@ def graph_per_day(country):
 
         if country == 'all':
             plt.figure(figsize=(15, 11))
-            updated_cases, _, _ = check_today_cases_all()
+            updated_cases, _, _ = check_today_cases_all('all')
             plt.title('Worldwide', fontweight=config.PLOT['fontweight'], fontsize=22)
         else:
             plt.figure(figsize=(15, 8))
-            updated_cases, _, _ = check_today_cases(country)
+            updated_cases = check_today_cases(country)
             data = data['timeline']
             plt.title(country, fontweight=config.PLOT['fontweight'], fontsize=22)
 
@@ -162,7 +166,7 @@ def graph_per_day(country):
         for index, cases_count in enumerate(confirmed_cases):
             if index == len(confirmed_cases)-1:
                 pass
-            elif cases_count - confirmed_cases[index+1] < 0:
+            elif cases_count - confirmed_cases[index+1] < 0: # if total cases of one day are less than the previous day
                 confirmed_cases[index] = 0
             else:
                 confirmed_cases[index] = cases_count - confirmed_cases[index+1]
