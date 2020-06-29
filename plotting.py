@@ -1,9 +1,8 @@
-
 import matplotlib
 import matplotlib.pyplot as plt
 import matplotlib.dates as mdates
 import requests
-from datetime import datetime
+import datetime
 import config
 from io import BytesIO
 import sqlite3
@@ -13,19 +12,23 @@ matplotlib.use('Agg')
 READER = sqlite3.connect(config.DATABASE["filename"], check_same_thread=False, isolation_level=None)
 
 def check_today_cases(countryname):
-    cases = READER.execute(
-        f"SELECT todayCases FROM countries WHERE country LIKE '%{countryname}%'").fetchone()[0]
+    if countryname == 'all':
+        cases = READER.execute(
+            f"SELECT todayCases FROM stats").fetchone()[0]
+    else:
+        cases = READER.execute(
+            f"SELECT todayCases FROM countries WHERE country LIKE '%{countryname}%'").fetchone()[0]
     return int(cases)
 
 
-def check_all_cases(countryname='all'):
-    if countryname == 'all':
-        cases, deaths, recovered = READER.execute(
-            f"SELECT cases, deaths, recovered FROM stats").fetchone()
-    else:
-        cases, deaths, recovered = READER.execute(
-            f"SELECT cases, deaths, recovered FROM countries WHERE country LIKE '%{countryname}%'").fetchone()
-    return int(cases), int(deaths), int(recovered)
+# def check_all_cases(countryname='all'):
+#     if countryname == 'all':
+#         cases, deaths, recovered = READER.execute(
+#             f"SELECT todayCases, todayDeaths, todayRecovered FROM stats").fetchone()
+#     else:
+#         cases, deaths, recovered = READER.execute(
+#             f"SELECT todayCases, todayDeaths, todayRecovered FROM countries WHERE country LIKE '%{countryname}%'").fetchone()
+#     return int(cases), int(deaths), int(recovered)
 
 def historical_stats(country, days=30):
     response = requests.get(f"https://disease.sh/v2/historical/{country}?lastdays={days}")
@@ -42,16 +45,16 @@ def history_graph(country):
     if country == 'all':
         data = historical_stats(country, 15).json()
         plt.figure(figsize=(13, 11))
-        updated_cases, updated_deaths, updated_recovered = check_all_cases('all')
+        # updated_cases, updated_deaths, updated_recovered = check_all_cases('all')
         plt.title('Worldwide', fontweight=config.PLOT['fontweight'], fontsize=22)
     else:
         data = historical_stats(country, 15).json()['timeline']
         plt.figure(figsize=(10, 8))
-        updated_cases = check_today_cases(country)
+        # updated_cases = check_today_cases(country)
         plt.title(country, fontweight=config.PLOT['fontweight'], fontsize=22)
 
     for date, cases in data['cases'].items():
-        date = datetime.strptime(date, '%m/%d/%y')
+        date = datetime.datetime.strptime(date, '%m/%d/%y').date()
         dates.append(date)
         confirmed_cases.append(int(cases))
 
@@ -135,27 +138,24 @@ def history_graph(country):
 
 
 def graph_per_day(country):
-    data = historical_stats(country, 30).json()['timeline']
     confirmed_cases = []
     dates = []
 
     if country == 'all':
+        data = historical_stats(country, 30).json()
         plt.figure(figsize=(15, 11))
-        updated_cases, _, _ = check_all_cases('all')
+        updated_cases = check_today_cases('all')
         plt.title('Worldwide', fontweight=config.PLOT['fontweight'], fontsize=22)
     else:
+        data = historical_stats(country, 30).json()['timeline']
         plt.figure(figsize=(15, 8))
         updated_cases = check_today_cases(country)
         plt.title(country, fontweight=config.PLOT['fontweight'], fontsize=22)
 
     for date, cases in data['cases'].items():
-        date = datetime.strptime(date, '%m/%d/%y')
+        date = datetime.datetime.strptime(date, '%m/%d/%y').date()
         dates.append(date)
         confirmed_cases.append(int(cases))
-
-    if confirmed_cases[-1] < updated_cases:
-        confirmed_cases.append(updated_cases)
-        dates.append(datetime.today().replace(hour=0, minute=0, second=0, microsecond=0))
 
     confirmed_cases.reverse()
     for index, cases_count in enumerate(confirmed_cases):
@@ -168,6 +168,15 @@ def graph_per_day(country):
     confirmed_cases.reverse()
     confirmed_cases.pop(0)
     dates.pop(0)
+
+    if updated_cases > 0 and country != 'all':
+        yesterday = datetime.date.today() - datetime.timedelta(1)
+        if dates[-1] != yesterday:
+            confirmed_cases.append(updated_cases)
+            dates.append(yesterday)
+        else:
+            confirmed_cases.append(updated_cases)
+            dates.append(datetime.date.today())
 
     for date, cases_value in zip(dates, confirmed_cases):
         plt.annotate(
