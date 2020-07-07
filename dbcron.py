@@ -40,6 +40,7 @@ def all_countries():
                     '{country["deaths"]}', 
                     '{country["todayDeaths"]}', 
                     '{country["recovered"]}',
+                    '{country["todayRecovered"]}',
                     '{country["critical"]}',
                     '{country["active"]}',
                     '{country["tests"]}',

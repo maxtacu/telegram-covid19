@@ -29,6 +29,7 @@ WRITER.execute("""CREATE TABLE IF NOT EXISTS countries (
             deaths INTEGER,
             todayDeaths INTEGER,
             recovered INTEGER,
+            todayRecovered INTEGER,
             critical INTEGER,
             active INTEGER,
             tests INTEGER,

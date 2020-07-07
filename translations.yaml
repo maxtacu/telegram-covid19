@@ -23,6 +23,7 @@ lang-en:
     *☠️ Deaths:*  {:,}
     *☠️ Last24h Deaths:*  {:,}
     *☘️ Recovered:*  {:,}
+    *☘️ Last24h Recovered:*  {:,}
     *🚨 Critical cases:* {:,}
     *🤒 Active:*  {:,}
     *🧪 Tests made*: {:,}
@@ -69,6 +70,7 @@ lang-ru:
     *☠️ Смертей:*  {:,}
     *☠️ Смертей за последние 24 часа:*  {:,}
     *☘️ Выздоровели:*  {:,}
+    *☘️ Выздоровели за последние 24 часа:*  {:,}
     *🚨 В кричическом состоянии:* {:,}
     *🤒 Больных в настоящий момент:*  {:,}
     *🧪 Подозрений*: {:,}
@@ -115,6 +117,7 @@ lang-pt:
     *☠️ Óbitos:*  {:,}
     *☠️ Óbitos (ultimos 24hs):*  {:,}
     *☘️ Recuperados:*  {:,}
+    *☘️ Recuperados (ultimos 24hs):*  {:,}
     *🚨 Casos críticos:* {:,}
     *🤒 Ativos:*  {:,}
     *🧪 Amostras*: {:,}
@@ -161,6 +164,7 @@ lang-ro:
     *☠️ Decedați:*  {:,}
     *☠️ Decedați în ultimele 24 ore:*  {:,}
     *☘️ Recuperați:*  {:,}
+    *☘️ Recuperați în ultimele 24 ore:*  {:,}
     *🚨 Cazuri critice:* {:,}
     *🤒 Activi:*  {:,}
     *🧪 Cazuri suspecte*: {:,}
@@ -207,6 +211,7 @@ lang-es:
     *☠️ Defunciones:*  {:,}
     *☠️ Defunciones (ultimas 24hs):*  {:,}
     *☘️ Recuperados:*  {:,}
+    *☘️ Recuperados (ultimas 24hs):*  {:,}
     *🚨 Casos críticos:* {:,}
     *🤒 Activos:*  {:,}
     *🧪 Tests realizados*: {:,}
