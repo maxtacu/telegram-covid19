@@ -10,7 +10,7 @@ WRITER = sqlite3.connect(config.DATABASE["filename"], check_same_thread=False, i
 
 def global_stats():
     now = datetime.datetime.now()
-    response = requests.get("https://corona.lmao.ninja/v2/all")
+    response = requests.get("https://disease.sh/v3/covid-19/all")
     data = response.json()
     WRITER.execute("DELETE FROM stats")
     WRITER.execute(f"""INSERT INTO stats VALUES (
@@ -27,7 +27,7 @@ def global_stats():
 
 
 def all_countries():
-    response = requests.get("https://corona.lmao.ninja/v2/countries?sort=cases")
+    response = requests.get("https://disease.sh/v3/covid-19/countries?sort=cases")
     data = response.json()
     WRITER.execute("DELETE FROM countries")
     for country in data:

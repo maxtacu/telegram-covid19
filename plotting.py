@@ -31,7 +31,7 @@ def check_today_cases(countryname):
 #     return int(cases), int(deaths), int(recovered)
 
 def historical_stats(country, days=30):
-    response = requests.get(f"https://disease.sh/v2/historical/{country}?lastdays={days}")
+    response = requests.get(f"https://disease.sh/v3/covid-19/historical/{country}?lastdays={days}")
     return response
 
 
