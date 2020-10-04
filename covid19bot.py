@@ -62,37 +62,15 @@ def iq_callback(query):
         BOT.answer_callback_query(query.id, callback_answer)
         graph = show_graph_perday_query(countryname)
         BOT.send_photo(query.message.chat.id, graph)
-    if query.data.startswith('notif-'):
-        if query.data == 'notif-remove':
-            remove_notif(query)
-        else:
-            edit_notif_callback_message(query)
-
-
-def remove_notif(query):
-    """
-    Remove notification entry from the database
-    """
-    try:
-        WRITER.execute(
-            f"DELETE FROM notifications WHERE user_id=={query.message.chat.id} AND country=='{query.message.text}'")
-        BOT.answer_callback_query(query.id, "Notification successfully removed")
-    except:
-        BOT.answer_callback_query(query.id, "An error occured. Try again")
-
-
-def edit_notif_callback_message(query):
-    keyboard = telebot.types.InlineKeyboardMarkup()
-    keyboard.add(
-        telebot.types.InlineKeyboardButton('Remove', callback_data='notif-remove')
-    )
-    BOT.edit_message_text(
-        f"*{query.data.replace('notif-','')}*",
-        query.message.chat.id,
-        query.message.message_id,
-        reply_markup=keyboard,
-        parse_mode='Markdown'
-    )
+    if query.data.startswith('addnotif-'):
+        countryname = query.data.replace('addnotif-', '')
+        add_notif(countryname, query)
+    if query.data.startswith('removenotif-'):
+        countryname = query.data.replace('removenotif-', '')
+        remove_notif(countryname, query)
+    if query.data.startswith('listnotif-'):
+        countryname = query.data.replace('listnotif-', '')
+        show_country_data(countryname, query)
 
 
 def user_language_update(language, user):
@@ -245,7 +223,55 @@ def show_graph_perday_query(countryname):
         plot = plotting.graph_per_day(countryname)
     return plot
 
-@BOT.message_handler(commands=['mynotif'])
+### Notifications ###
+def check_notif(countryname, message):
+    if message.chat.id:
+        notif_exists = READER.execute(
+            f"SELECT country FROM notifications WHERE country=='{countryname}' AND user_id=={message.chat.id}").fetchone()
+    else:
+        notif_exists = READER.execute(
+            f"SELECT country FROM notifications WHERE country=='{countryname}' AND user_id=={message.from_user.id}").fetchone()
+    return bool(notif_exists)
+
+
+def remove_notif(countryname, query):
+    """
+    Remove notification entry from the database
+    """
+    try:
+        WRITER.execute(
+            f"DELETE FROM notifications WHERE user_id=={query.from_user.id} AND country=='{countryname}'")
+        BOT.edit_message_text(
+                query.message.text,
+                query.message.chat.id,
+                query.message.message_id,
+                reply_markup=inline_keyboard(countryname, query.message)
+            )
+        BOT.answer_callback_query(query.id, "Notification successfully removed")
+    except:
+        BOT.answer_callback_query(query.id, "An error occured. Try again")
+
+
+def add_notif(countryname, query):
+    now = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+    # language = language_check(message.chat.id)
+    notif_exists = READER.execute(
+        f"SELECT country FROM notifications WHERE country=='{countryname}' AND user_id=={query.from_user.id}").fetchone()
+    if notif_exists:
+        BOT.answer_callback_query(query.id, f'Notification for {countryname} is already existing.')
+    else:
+        WRITER.execute(
+            f"INSERT INTO notifications VALUES ('{query.from_user.id}', '{query.from_user.username}', '{countryname}', '{now}')")
+        BOT.edit_message_text(
+            query.message.text,
+            query.message.chat.id,
+            query.message.message_id,
+            reply_markup=inline_keyboard(countryname, query.message)
+        )
+        BOT.answer_callback_query(query.id, f'Notification for {countryname} successfully added')
+
+
+@BOT.message_handler(commands=['notif'])
 def notification_check(message):
     # language = language_check(message.chat.id)
     update_user_checktime(message.chat.id)
@@ -276,38 +302,27 @@ def existing_notifications_buttons(countrylist):
         keyboard.add(
             telebot.types.InlineKeyboardButton(
                 country[0],
-                callback_data=f'notif-{country[0]}'
+                callback_data=f'listnotif-{country[0]}'
             )
         )
     return keyboard
 
 
-@BOT.message_handler(commands=['setnotif'])
-def notification_set(message):
-    # language = language_check(message.chat.id)
-    update_user_checktime(message.chat.id)
-    try:
-        BOT.send_message(message.chat.id, "This feature is not working yet and is still under development")
-        BOT.register_next_step_handler(message, add_notification)
-    except:
-        BOT.send_message(message.chat.id, "An error occured. Try again")
-
-
-def add_notification(message):
-    now = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-    # language = language_check(message.chat.id)
-    countryname = check_country(message)
-    notif_exists = READER.execute(
-        f"SELECT country FROM notifications WHERE country=='{countryname}' AND user_id=={message.chat.id}").fetchone()
-    if notif_exists:
-        BOT.send_message(message.chat.id, f'Notification for {countryname} is already existing. Cancelling..')
-    else:
-        if countryname:
-            WRITER.execute(
-                f"INSERT INTO notifications VALUES ('{message.chat.id}', '{message.chat.username}', '{countryname}', '{now}')")
-            BOT.reply_to(message, f'Notification for {countryname} successfully added')
-        else:
-            BOT.register_next_step_handler(message, add_notification)
+### Specific Country Info ###
+def show_country_data(countryname, query):
+    language = language_check(query.message.chat.id)
+    keyboard = inline_keyboard(countryname, query.message)
+    update_user_checktime(query.message.chat.id)
+    stats = READER.execute(
+        f"SELECT * FROM countries WHERE country=='{countryname}'").fetchone()
+    stats = change_time_representation(stats)
+    BOT.edit_message_text(
+        config.TRANSLATIONS[language]["stats-per-country"].format(*stats),
+        query.message.chat.id,
+        query.message.message_id,
+        parse_mode="Markdown",
+        reply_markup=keyboard
+    )
 
 
 @BOT.message_handler(content_types=["text"])
@@ -315,29 +330,46 @@ def country_stats(message):
     LOGGER.info(f"{message.chat.id}-{message.chat.username}-text:{message.text}")
     language = language_check(message.chat.id)
     countryname = check_country(message)
+    keyboard = inline_keyboard(countryname, message)
+    update_user_checktime(message.chat.id)
+    stats = READER.execute(
+        f"SELECT * FROM countries WHERE country=='{countryname}'").fetchone()
+    stats = change_time_representation(stats)
+    BOT.send_message(
+        message.chat.id,
+        config.TRANSLATIONS[language]["stats-per-country"].format(*stats),
+        parse_mode="Markdown",
+        reply_markup=keyboard
+    )
+
+
+def inline_keyboard(countryname, message):
     keyboard = telebot.types.InlineKeyboardMarkup()
-    if countryname:
-        try:
-            update_user_checktime(message.chat.id)
-            stats = READER.execute(
-                f"SELECT * FROM countries WHERE country=='{countryname}'").fetchone()
-            stats = change_time_representation(stats)
-            keyboard.row(
-                telebot.types.InlineKeyboardButton(
-                    config.TRANSLATIONS[language]["show-graph"],
-                    callback_data=f'graph-{countryname}'),
-                telebot.types.InlineKeyboardButton(
-                    "Cases per day",
-                    callback_data=f'graphperday-{countryname}')
-            )
-            BOT.send_message(
-                message.chat.id,
-                config.TRANSLATIONS[language]["stats-per-country"].format(*stats),
-                parse_mode="Markdown",
-                reply_markup=keyboard
-            )
-        except:
-            pass
+    language = language_check(message.chat.id)
+    notif_exists = check_notif(countryname, message)
+    # first row
+    keyboard.row(
+        telebot.types.InlineKeyboardButton(
+            config.TRANSLATIONS[language]["show-graph"],
+            callback_data=f'graph-{countryname}'),
+        telebot.types.InlineKeyboardButton(
+            "Cases per day",
+            callback_data=f'graphperday-{countryname}')
+    )
+    # second row
+    if notif_exists:
+        keyboard.row(
+            telebot.types.InlineKeyboardButton(
+                "Remove notification",
+                callback_data=f'removenotif-{countryname}')
+        )
+    else:
+        keyboard.row(
+            telebot.types.InlineKeyboardButton(
+                "Add notification",
+                callback_data=f'addnotif-{countryname}')
+        )
+    return keyboard
 
 
 def check_country(message, text=None):
