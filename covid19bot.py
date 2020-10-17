@@ -7,13 +7,15 @@ import time
 from datetime import datetime, timedelta
 import config
 import plotting
+from sqlalchemy import create_engine
 
 
 BOT = telebot.TeleBot(config.TELEGRAM["token"])
-WRITER = sqlite3.connect(config.DATABASE["filename"], check_same_thread=False, isolation_level=None)
-WRITER.execute('pragma journal_mode=wal;') # write-ahead-logging (WAL)
-READER = sqlite3.connect(config.DATABASE["filename"], check_same_thread=False, isolation_level=None)
-READER.execute('pragma journal_mode=wal;') # write-ahead-logging (WAL)
+engine = create_engine('sqlite:///covid19.db')
+# WRITER = sqlite3.connect(config.DATABASE["filename"], check_same_thread=False, isolation_level=None)
+# WRITER.execute('pragma journal_mode=wal;') # write-ahead-logging (WAL)
+# READER = sqlite3.connect(config.DATABASE["filename"], check_same_thread=False, isolation_level=None)
+# READER.execute('pragma journal_mode=wal;') # write-ahead-logging (WAL)
 # Enable logging
 logging.basicConfig(
     format='%(asctime)s - %(levelname)s - %(message)s',
