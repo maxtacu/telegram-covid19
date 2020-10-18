@@ -1,27 +1,25 @@
 import requests
-import sqlite3
+from dbmodels import GlobalStats, CountryStats
 import datetime
 import config
 import time
-
-
-WRITER = sqlite3.connect(config.DATABASE["filename"], check_same_thread=False, isolation_level=None)
 
 
 def global_stats():
     now = datetime.datetime.now()
     response = requests.get("https://disease.sh/v3/covid-19/all")
     data = response.json()
-    WRITER.execute("DELETE FROM stats")
-    WRITER.execute(f"""INSERT INTO stats VALUES (
-                    '{data['cases']}', 
-                    '{data['todayCases']}', 
-                    '{data['deaths']}',
-                    '{data['todayDeaths']}',
-                    '{data['recovered']}',
-                    '{data['todayRecovered']}',
-                    '{data['active']}',
-                    '{convert_updated(data['updated'])}')""")
+    GlobalStats.delete().execute()
+    GlobalStats.create(
+        cases=data['cases'],
+        todayCases=data['todayCases'],
+        deaths=data['deaths'],
+        todayDeaths=data['todayDeaths'],
+        recovered=data['recovered'],
+        todayRecovered=data['todayRecovered'],
+        active=data['active'],
+        updated=convert_updated(data['updated'])
+    )
 
     print(f'General data updated: {now.strftime("%Y-%m-%d %H:%M:%S")}')
 
@@ -29,22 +27,24 @@ def global_stats():
 def all_countries():
     response = requests.get("https://disease.sh/v3/covid-19/countries?sort=cases")
     data = response.json()
-    WRITER.execute("DELETE FROM countries")
+    CountryStats.delete().execute()
     for country in data:
         if "'" in country["country"]:
             country["country"] = country["country"].replace("'", "''")
-        WRITER.execute(f"""INSERT INTO countries VALUES (
-                    '{country["country"]}', 
-                    '{country["cases"]}', 
-                    '{country["todayCases"]}', 
-                    '{country["deaths"]}', 
-                    '{country["todayDeaths"]}', 
-                    '{country["recovered"]}',
-                    '{country["todayRecovered"]}',
-                    '{country["critical"]}',
-                    '{country["active"]}',
-                    '{country["tests"]}',
-                    '{convert_updated(country["updated"])}')""")
+        CountryStats.create(
+            country = country["country"], 
+            cases = country["cases"], 
+            todayCases = country["todayCases"], 
+            deaths = country["deaths"], 
+            todayDeaths = country["todayDeaths"], 
+            recovered = country["recovered"],
+            todayRecovered = country["todayRecovered"],
+            critical = country["critical"],
+            active = country["active"],
+            casesPerOneMillion = country["casesPerOneMillion"],
+            tests = country["tests"],
+            updated = convert_updated(country["updated"])
+        )
     now = datetime.datetime.now()
     print(f'Data for countries updated: {now.strftime("%Y-%m-%d %H:%M:%S")}')
 
@@ -56,5 +56,5 @@ def convert_updated(milliseconds):
 
 
 global_stats()
-time.sleep(3)
+time.sleep(2)
 all_countries()
