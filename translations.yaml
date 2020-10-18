@@ -1,33 +1,33 @@
 ---
 bycountry: |
-  *{countryname}*: {cases:,}
+  *{0.country}*: {0.cases:,}
 
 lang-en:
   dm: Message the developer
   pickrequest: Choose your language
   pick: You picked English 
   stats: |
-    *🦠 Total cases:*  {:,}
-    *🦠 Today cases:*  {:,}
-    *☠️ Deaths:*  {:,}
-    *☠️ Today Deaths:*  {:,}
-    *☘️ Recovered:*  {:,}
-    *☘️ Today Recovered:*  {:,}
-    *🤒 Active:*  {:,}
-    *⏰ Data updated:* {} ago
+    *🦠 Total cases:*  {0.cases:,}
+    *🦠 Today cases:*  {0.todayCases:,}
+    *☠️ Deaths:*  {0.deaths:,}
+    *☠️ Today Deaths:*  {0.todayDeaths:,}
+    *☘️ Recovered:*  {0.recovered:,}
+    *☘️ Today Recovered:*  {0.todayRecovered:,}
+    *🤒 Active:*  {0.active:,}
+    *⏰ Data updated:* {0.updated} ago
     Check-out /help for more stats
   stats-per-country: |
-    Detailed stats for *{}*
-    *🦠 Total cases:*  {:,}
-    *🦠 Last24h cases:*  {:,}
-    *☠️ Deaths:*  {:,}
-    *☠️ Last24h Deaths:*  {:,}
-    *☘️ Recovered:*  {:,}
-    *☘️ Last24h Recovered:*  {:,}
-    *🚨 Critical cases:* {:,}
-    *🤒 Active:*  {:,}
-    *🧪 Tests made*: {:,}
-    *⏰ Data updated:* {} ago
+    Detailed stats for *{0.country}*
+    *🦠 Total cases:*  {0.cases:,}
+    *🦠 Last24h cases:*  {0.todayCases:,}
+    *☠️ Deaths:*  {0.deaths:,}
+    *☠️ Last24h Deaths:*  {0.todayDeaths:,}
+    *☘️ Recovered:*  {0.recovered:,}
+    *☘️ Last24h Recovered:*  {0.todayRecovered:,}
+    *🚨 Critical cases:* {0.critical:,}
+    *🤒 Active:*  {0.active:,}
+    *🧪 Tests made*: {0.tests:,}
+    *⏰ Data updated:* {0.updated} ago
     Check-out /help for more stats
   wrong-country: Sorry! I'm not familiar with this country. Try to type another way
   country-type: Type country name
@@ -54,27 +54,27 @@ lang-ru:
   pickrequest: Выбери предпочитаемый язык
   pick: Выбран Русский язык
   stats: |
-    *🦠 Всего случаев:*  {:,}
-    *🦠 Случаев сегодня:*  {:,}
-    *☠️ Смертей:*  {:,}
-    *☠️ Смертей сегодня:*  {:,}
-    *☘️ Выздоровели:*  {:,}
-    *☘️ Выздоровели сегодня:*  {:,}
-    *🤒 Больных в настоящий момент:*  {:,}
-    *⏰ Данные обновлены:* {} назад
+    *🦠 Всего случаев:*  {0.cases:,}
+    *🦠 Случаев сегодня:*  {0.todayCases:,}
+    *☠️ Смертей:*  {0.deaths:,}
+    *☠️ Смертей сегодня:*  {0.todayDeaths:,}
+    *☘️ Выздоровели:*  {0.recovered:,}
+    *☘️ Выздоровели сегодня:*  {0.todayRecovered:,}
+    *🤒 Больных в настоящий момент:*  {0.active:,}
+    *⏰ Данные обновлены:* {0.updated} назад
     Проверь /help для большей статистики
   stats-per-country: |
-    Детальная статистика по *{}*
-    *🦠 Всего случаев:*  {:,}
-    *🦠 Случаев за последние 24 часа:*  {:,}
-    *☠️ Смертей:*  {:,}
-    *☠️ Смертей за последние 24 часа:*  {:,}
-    *☘️ Выздоровели:*  {:,}
-    *☘️ Выздоровели за последние 24 часа:*  {:,}
-    *🚨 В кричическом состоянии:* {:,}
-    *🤒 Больных в настоящий момент:*  {:,}
-    *🧪 Подозрений*: {:,}
-    *⏰ Данные обновлены:* {} назад
+    Детальная статистика по *{0.country}*
+    *🦠 Всего случаев:*  {0.cases:,}
+    *🦠 Случаев за последние 24 часа:*  {0.todayCases:,}
+    *☠️ Смертей:*  {0.deaths:,}
+    *☠️ Смертей за последние 24 часа:*  {0.todayDeaths:,}
+    *☘️ Выздоровели:*  {0.recovered:,}
+    *☘️ Выздоровели за последние 24 часа:*  {0.todayRecovered:,}
+    *🚨 В кричическом состоянии:* {0.critical:,}
+    *🤒 Больных в настоящий момент:*  {0.active:,}
+    *🧪 Подозрений*: {0.tests:,}
+    *⏰ Данные обновлены:* {0.updated} назад
     Проверь /help для большей статистики
   wrong-country: Прошу прощения, мне такая страна не знакома. Попробуй написать иначе
   country-type: Введи название страны (на английском)
@@ -101,27 +101,27 @@ lang-pt:
   pickrequest: Escolha a sua língua
   pick: Você escolheu o português
   stats: |
-    *🦠 Confirmados:*  {:,}
-    *🦠 Confirmados hoje:*  {:,}
-    *☠️ Óbitos:*  {:,}
-    *☠️ Óbitos hoje:*  {:,}
-    *☘️ Recuperados:*  {:,}
-    *☘️ Recuperados hoje:*  {:,}
-    *🤒 Ativos:*  {:,}
-    *⏰ Atualizado:* {} atrás
+    *🦠 Confirmados:*  {0.cases:,}
+    *🦠 Confirmados hoje:*  {0.todayCases:,}
+    *☠️ Óbitos:*  {0.deaths:,}
+    *☠️ Óbitos hoje:*  {0.todayDeaths:,}
+    *☘️ Recuperados:*  {0.recovered:,}
+    *☘️ Recuperados hoje:*  {0.todayRecovered:,}
+    *🤒 Ativos:*  {0.active:,}
+    *⏰ Atualizado:* {0.updated} atrás
     Confira /help para mais estatísticas
   stats-per-country: |
-    Estatísticas detalhadas para *{}*
-    *🦠 Confirmados:*  {:,}
-    *🦠 Confirmados (ultimos 24hs):*  {:,}
-    *☠️ Óbitos:*  {:,}
-    *☠️ Óbitos (ultimos 24hs):*  {:,}
-    *☘️ Recuperados:*  {:,}
-    *☘️ Recuperados (ultimos 24hs):*  {:,}
-    *🚨 Casos críticos:* {:,}
-    *🤒 Ativos:*  {:,}
-    *🧪 Amostras*: {:,}
-    *⏰ Atualizado:* {} atrás
+    Estatísticas detalhadas para *{0.country}*
+    *🦠 Confirmados:*  {0.cases:,}
+    *🦠 Confirmados (ultimos 24hs):*  {0.todayCases:,}
+    *☠️ Óbitos:*  {0.deaths:,}
+    *☠️ Óbitos (ultimos 24hs):*  {0.todayDeaths:,}
+    *☘️ Recuperados:*  {0.recovered:,}
+    *☘️ Recuperados (ultimos 24hs):*  {0.todayRecovered:,}
+    *🚨 Casos críticos:* {0.critical:,}
+    *🤒 Ativos:*  {0.active:,}
+    *🧪 Amostras*: {0.tests:,}
+    *⏰ Atualizado:* {0.updated} atrás
     Confira /help para mais estatísticas
   wrong-country: Sorry! No such country. Try to type another way
   country-type: Escreve o nome do país (em Inglês)
@@ -148,27 +148,27 @@ lang-ro:
   pickrequest: Alege limba
   pick: Ai ales română
   stats: |
-    *🦠 Confirmate:*  {:,}
-    *🦠 Confirmate astazi:*  {:,}
-    *☠️ Decedați:*  {:,}
-    *☠️ Decedați astazi:*  {:,}
-    *☘️ Recuperați:*  {:,}
-    *☘️ Recuperați astazi:*  {:,}
-    *🤒 Activi:*  {:,}
-    *⏰ Actualizat:* {} în urmă
+    *🦠 Confirmate:*  {0.cases:,}
+    *🦠 Confirmate astazi:*  {0.todayCases:,}
+    *☠️ Decedați:*  {0.deaths:,}
+    *☠️ Decedați astazi:*  {0.todayDeaths:,}
+    *☘️ Recuperați:*  {0.recovered:,}
+    *☘️ Recuperați astazi:*  {0.todayRecovered:,}
+    *🤒 Activi:*  {0.active:,}
+    *⏰ Actualizat:* {0.updated} în urmă
     Verifică /help pentru mai multă statistică
   stats-per-country: |
-    Statistica detaliată pentru *{}*
-    *🦠 Confirmate:*  {:,}
-    *🦠 Confirmate în ultimele 24 ore:*  {:,}
-    *☠️ Decedați:*  {:,}
-    *☠️ Decedați în ultimele 24 ore:*  {:,}
-    *☘️ Recuperați:*  {:,}
-    *☘️ Recuperați în ultimele 24 ore:*  {:,}
-    *🚨 Cazuri critice:* {:,}
-    *🤒 Activi:*  {:,}
-    *🧪 Cazuri suspecte*: {:,}
-    *⏰ Actualizat:* {} în urmă
+    Statistica detaliată pentru *{0.country}*
+    *🦠 Confirmate:*  {0.cases:,}
+    *🦠 Confirmate în ultimele 24 ore:*  {0.todayCases:,}
+    *☠️ Decedați:*  {0.deaths:,}
+    *☠️ Decedați în ultimele 24 ore:*  {0.todayDeaths:,}
+    *☘️ Recuperați:*  {0.recovered:,}
+    *☘️ Recuperați în ultimele 24 ore:*  {0.todayRecovered:,}
+    *🚨 Cazuri critice:* {0.critical:,}
+    *🤒 Activi:*  {0.active:,}
+    *🧪 Cazuri suspecte*: {0.tests:,}
+    *⏰ Actualizat:* {0.updated} în urmă
     Verifică /help pentru mai multă statistică
   wrong-country: Cer scuze, nu recunosc țara asta. Mai încearcă
   country-type: Trimite-mi denumirea țării (în engleză)
@@ -195,27 +195,27 @@ lang-es:
   pickrequest: Elige tu idioma
   pick: Elegiste español
   stats: |
-    *🦠 Casos totales:*  {:,}
-    *🦠 Casos hoy en día:*  {:,}
-    *☠️ Defunciones:*  {:,}
-    *☠️ Defunciones hoy en día:*  {:,}
-    *☘️ Recuperados:*  {:,}
-    *☘️ Recuperados hoy en día:*  {:,}
-    *🤒 Activos:*  {:,}
-    *⏰ Datos actualizados:* hace {} 
+    *🦠 Casos totales:*  {0.cases:,}
+    *🦠 Casos hoy en día:*  {0.todayCases:,}
+    *☠️ Defunciones:*  {0.deaths:,}
+    *☠️ Defunciones hoy en día:*  {0.todayDeaths:,}
+    *☘️ Recuperados:*  {0.recovered:,}
+    *☘️ Recuperados hoy en día:*  {0.todayRecovered:,}
+    *🤒 Activos:*  {0.active:,}
+    *⏰ Datos actualizados:* hace {0.updated} 
     Revise /help para más estadísticas
   stats-per-country: |
-    Estadísticas detalladas de *{}*
-    *🦠 Casos totales:*  {:,}
-    *🦠 Casos confirmados (ultimas 24hs):*  {:,}
-    *☠️ Defunciones:*  {:,}
-    *☠️ Defunciones (ultimas 24hs):*  {:,}
-    *☘️ Recuperados:*  {:,}
-    *☘️ Recuperados (ultimas 24hs):*  {:,}
-    *🚨 Casos críticos:* {:,}
-    *🤒 Activos:*  {:,}
-    *🧪 Tests realizados*: {:,}
-    *⏰ Datos actualizados:* hace {} 
+    Estadísticas detalladas de *{0.country}*
+    *🦠 Casos totales:*  {0.cases:,}
+    *🦠 Casos confirmados (ultimas 24hs):*  {0.todayCases:,}
+    *☠️ Defunciones:*  {0.deaths:,}
+    *☠️ Defunciones (ultimas 24hs):*  {0.todayDeaths:,}
+    *☘️ Recuperados:*  {0.recovered:,}
+    *☘️ Recuperados (ultimas 24hs):*  {0.todayRecovered:,}
+    *🚨 Casos críticos:* {0.critical:,}
+    *🤒 Activos:*  {0.active:,}
+    *🧪 Tests realizados*: {0.tests:,}
+    *⏰ Datos actualizados:* hace {0.updated} 
     Revise /help para más estadísticas
   wrong-country: Perdón! No existe ese país. Intenta escribirlo de otra manera.
   country-type: Enviarme el nombre del país (en Inglés)

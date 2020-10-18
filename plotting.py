@@ -5,20 +5,18 @@ import requests
 import datetime
 import config
 from io import BytesIO
-import sqlite3
+from dbmodels import GlobalStats, CountryStats, User, Notification
 from statistics import mean
 
 matplotlib.use('Agg')
-READER = sqlite3.connect(config.DATABASE["filename"], check_same_thread=False, isolation_level=None)
 
 def check_today_cases(countryname):
     if countryname == 'all':
-        cases = READER.execute(
-            f"SELECT todayCases FROM stats").fetchone()[0]
+        stats = GlobalStats.get().todayCases
     else:
-        cases = READER.execute(
-            f"SELECT todayCases FROM countries WHERE country LIKE '%{countryname}%'").fetchone()[0]
-    return int(cases)
+        stats = CountryStats.select().where(CountryStats.country.contains(countryname)).get().todayCases
+
+    return int(stats)
 
 
 # def check_all_cases(countryname='all'):
