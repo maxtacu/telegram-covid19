@@ -48,6 +48,7 @@ class CountryStats(BaseModel):
    critical = IntegerField()
    active = IntegerField()
    casesPerOneMillion = IntegerField() 
+   deathsPerOneMillion = IntegerField() 
    tests = IntegerField()
    updated = DateTimeField()
 

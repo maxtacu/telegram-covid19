@@ -42,6 +42,7 @@ def all_countries():
             critical = country["critical"],
             active = country["active"],
             casesPerOneMillion = country["casesPerOneMillion"],
+            deathsPerOneMillion = country["deathsPerOneMillion"],
             tests = country["tests"],
             updated = convert_updated(country["updated"])
         )

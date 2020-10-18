@@ -20,8 +20,10 @@ lang-en:
     Detailed stats for *{0.country}*
     *🦠 Total cases:*  {0.cases:,}
     *🦠 Last24h cases:*  {0.todayCases:,}
+    *🦠 CasesPerOneMillion:*  {0.casesPerOneMillion:,}
     *☠️ Deaths:*  {0.deaths:,}
     *☠️ Last24h Deaths:*  {0.todayDeaths:,}
+    *☠️ DeathsPerOneMillion:*  {0.deathsPerOneMillion:,}
     *☘️ Recovered:*  {0.recovered:,}
     *☘️ Last24h Recovered:*  {0.todayRecovered:,}
     *🚨 Critical cases:* {0.critical:,}
@@ -67,8 +69,10 @@ lang-ru:
     Детальная статистика по *{0.country}*
     *🦠 Всего случаев:*  {0.cases:,}
     *🦠 Случаев за последние 24 часа:*  {0.todayCases:,}
+    *🦠 Случаев на 1 миллион:*  {0.casesPerOneMillion:,}
     *☠️ Смертей:*  {0.deaths:,}
     *☠️ Смертей за последние 24 часа:*  {0.todayDeaths:,}
+    *☠️ Смертей на 1 миллион:*  {0.deathsPerOneMillion:,}
     *☘️ Выздоровели:*  {0.recovered:,}
     *☘️ Выздоровели за последние 24 часа:*  {0.todayRecovered:,}
     *🚨 В кричическом состоянии:* {0.critical:,}
@@ -114,8 +118,10 @@ lang-pt:
     Estatísticas detalhadas para *{0.country}*
     *🦠 Confirmados:*  {0.cases:,}
     *🦠 Confirmados (ultimos 24hs):*  {0.todayCases:,}
+    *🦠 Confirmados Por Um Milhão:*  {0.casesPerOneMillion:,}
     *☠️ Óbitos:*  {0.deaths:,}
     *☠️ Óbitos (ultimos 24hs):*  {0.todayDeaths:,}
+    *☠️ Óbitos Por Um Milhão:*  {0.deathsPerOneMillion:,}
     *☘️ Recuperados:*  {0.recovered:,}
     *☘️ Recuperados (ultimos 24hs):*  {0.todayRecovered:,}
     *🚨 Casos críticos:* {0.critical:,}
@@ -161,8 +167,10 @@ lang-ro:
     Statistica detaliată pentru *{0.country}*
     *🦠 Confirmate:*  {0.cases:,}
     *🦠 Confirmate în ultimele 24 ore:*  {0.todayCases:,}
+    *🦠 Confirmate la un milion:*  {0.casesPerOneMillion:,}
     *☠️ Decedați:*  {0.deaths:,}
     *☠️ Decedați în ultimele 24 ore:*  {0.todayDeaths:,}
+    *☠️ Decedați la un milion:*  {0.deathsPerOneMillion:,}
     *☘️ Recuperați:*  {0.recovered:,}
     *☘️ Recuperați în ultimele 24 ore:*  {0.todayRecovered:,}
     *🚨 Cazuri critice:* {0.critical:,}
@@ -208,8 +216,10 @@ lang-es:
     Estadísticas detalladas de *{0.country}*
     *🦠 Casos totales:*  {0.cases:,}
     *🦠 Casos confirmados (ultimas 24hs):*  {0.todayCases:,}
+    *🦠 Casos por millón:*  {0.casesPerOneMillion:,}
     *☠️ Defunciones:*  {0.deaths:,}
     *☠️ Defunciones (ultimas 24hs):*  {0.todayDeaths:,}
+    *☠️ Defunciones por millón:*  {0.deathsPerOneMillion:,}
     *☘️ Recuperados:*  {0.recovered:,}
     *☘️ Recuperados (ultimas 24hs):*  {0.todayRecovered:,}
     *🚨 Casos críticos:* {0.critical:,}
