@@ -141,7 +141,7 @@ def allstats(message):
             config.TRANSLATIONS[language]["show-graph"],
             callback_data=f'graph-all'),
         telebot.types.InlineKeyboardButton(
-            "Cases per day",
+            config.TRANSLATIONS[language]["show-graph-perday"],
             callback_data=f'graphperday-all')
         )
     BOT.send_message(

@@ -33,7 +33,8 @@ lang-en:
     Check-out /help for more stats
   wrong-country: Sorry! I'm not familiar with this country. Try to type another way
   country-type: Type country name
-  show-graph: Show Graph
+  show-graph: Overall Graph
+  show-graph-perday: Cases per day
   show-graph-alert: Showing graph for the last {} days
   help: |
     I will show you current stats of COVID-19 Worldwide 
@@ -82,7 +83,8 @@ lang-ru:
     Проверь /help для большей статистики
   wrong-country: Прошу прощения, мне такая страна не знакома. Попробуй написать иначе
   country-type: Введи название страны (на английском)
-  show-graph: Показать график
+  show-graph: Общий график
+  show-graph-perday: График Случаев/день
   show-graph-alert: Показываю график за последние {} дней
   help: |
     Я покажу тебе последнюю статистику по COVID-19 по всему миру.
@@ -132,6 +134,7 @@ lang-pt:
   wrong-country: Sorry! No such country. Try to type another way
   country-type: Escreve o nome do país (em Inglês)
   show-graph: Mostrar gráfico
+  show-graph-perday: Gráfico casos/dia
   show-graph-alert: Showing graph for the last {} days
   help: |
     Mostrarei as estatísticas atuais da COVID-19 no mundo 
@@ -180,7 +183,8 @@ lang-ro:
     Verifică /help pentru mai multă statistică
   wrong-country: Cer scuze, nu recunosc țara asta. Mai încearcă
   country-type: Trimite-mi denumirea țării (în engleză)
-  show-graph: Arată graficul
+  show-graph: Grafic general
+  show-graph-perday: Graficul cazuri/zi
   show-graph-alert: Arăt graficul pentru ultimele {} zile
   help: |
     Eu îți voi prezenta statistica generală a COVID-19 în lume
@@ -230,6 +234,7 @@ lang-es:
   wrong-country: Perdón! No existe ese país. Intenta escribirlo de otra manera.
   country-type: Enviarme el nombre del país (en Inglés)
   show-graph: Mostrar gráfico
+  show-graph-perday: Gráfico casos/dia
   show-graph-alert: Showing graph for the last {} days
   help: |
     Te mostraré las estadísticas actuales de COVID-19 en todo el mundo
