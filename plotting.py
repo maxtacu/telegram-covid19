@@ -4,6 +4,7 @@ import matplotlib.dates as mdates
 import requests
 import datetime
 import config
+import gc
 from io import BytesIO
 from dbmodels import GlobalStats, CountryStats, User, Notification
 from statistics import mean
@@ -132,6 +133,7 @@ def history_graph(country):
     in_memory_buffer.seek(0)
     plt.cla()
     plt.close()
+    gc.collect()
     return in_memory_buffer
 
 
@@ -204,4 +206,5 @@ def graph_per_day(country):
     in_memory_buffer.seek(0)
     plt.cla()
     plt.close()
+    gc.collect()
     return in_memory_buffer
