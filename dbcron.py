@@ -1,5 +1,5 @@
 import requests
-from dbmodels import GlobalStats, CountryStats
+from dbmodels import GlobalStats, CountryStats, VaccineData
 import datetime
 import config
 import time
@@ -32,22 +32,38 @@ def all_countries():
         if "'" in country["country"]:
             country["country"] = country["country"].replace("'", "''")
         CountryStats.create(
-            country = country["country"], 
-            cases = country["cases"], 
-            todayCases = country["todayCases"], 
-            deaths = country["deaths"], 
-            todayDeaths = country["todayDeaths"], 
-            recovered = country["recovered"],
-            todayRecovered = country["todayRecovered"],
-            critical = country["critical"],
-            active = country["active"],
-            casesPerOneMillion = country["casesPerOneMillion"],
-            deathsPerOneMillion = country["deathsPerOneMillion"],
-            tests = country["tests"],
-            updated = convert_updated(country["updated"])
+            country=country["country"],
+            cases=country["cases"],
+            todayCases=country["todayCases"],
+            deaths=country["deaths"],
+            todayDeaths=country["todayDeaths"],
+            recovered=country["recovered"],
+            todayRecovered=country["todayRecovered"],
+            critical=country["critical"],
+            active=country["active"],
+            casesPerOneMillion=country["casesPerOneMillion"],
+            deathsPerOneMillion=country["deathsPerOneMillion"],
+            tests=country["tests"],
+            updated=convert_updated(country["updated"])
         )
     now = datetime.datetime.now()
     print(f'Data for countries updated: {now.strftime("%Y-%m-%d %H:%M:%S")}')
+
+
+# def vaccines():
+#     response = requests.get("https://disease.sh/v3/covid-19/vaccine")
+#     data = response.json()
+#     VaccineData.delete().execute()
+#     for vaccinedata in data['data']:
+#         VaccineData.create(
+#             candidate=vaccinedata["candidate"],
+#             mechanism=vaccinedata["mechanism"],
+#             sponsors=vaccinedata["sponsors"],
+#             trialPhase=vaccinedata["trialPhase"],
+#             institutions=vaccinedata["institutions"],
+#         )
+#     now = datetime.datetime.now()
+#     print(f'Data for vaccines updated: {now.strftime("%Y-%m-%d %H:%M:%S")}')
 
 
 def convert_updated(milliseconds):

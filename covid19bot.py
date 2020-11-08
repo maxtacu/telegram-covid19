@@ -8,7 +8,6 @@ import config
 import plotting
 from dbmodels import GlobalStats, CountryStats, User, Notification
 
-
 BOT = telebot.TeleBot(config.TELEGRAM["token"])
 
 logging.basicConfig(
@@ -85,7 +84,7 @@ def edit_notif_callback_message(query):
         telebot.types.InlineKeyboardButton('Remove', callback_data='notif-remove')
     )
     BOT.edit_message_text(
-        f"*{query.data.replace('notif-','')}*",
+        f"*{query.data.replace('notif-', '')}*",
         query.message.chat.id,
         query.message.message_id,
         reply_markup=keyboard,
@@ -119,7 +118,7 @@ def language_pick_buttons(message, language):
 
 def language_check(userid):
     language = User.get(User.id == userid).language
-    return 'lang-'+language
+    return 'lang-' + language
 
 
 def update_user_checktime(user_id):
@@ -128,7 +127,7 @@ def update_user_checktime(user_id):
 
 
 @BOT.message_handler(commands=['stats'])
-def allstats(message):
+def all_stats(message):
     LOGGER.info(f"{message.chat.id}-{message.chat.username}-command:{message.text}")
     keyboard = telebot.types.InlineKeyboardMarkup()
     update_user_checktime(message.chat.id)
@@ -143,7 +142,7 @@ def allstats(message):
         telebot.types.InlineKeyboardButton(
             config.TRANSLATIONS[language]["show-graph-perday"],
             callback_data=f'graphperday-all')
-        )
+    )
     BOT.send_message(
         message.chat.id,
         config.TRANSLATIONS[language]["stats"].format(global_stats),
@@ -151,12 +150,30 @@ def allstats(message):
         reply_markup=keyboard)
 
 
-def change_time_representation(stats): # I expect time data as the last object
+@BOT.message_handler(commands=['vacs'])
+def get_vaccine_data(message):
+    import requests
+    response = requests.get("https://disease.sh/v3/covid-19/vaccine")
+    data = response.json()
+    responseMessage = f"🧪*Total Candidates:*  {data['totalCandidates']}"
+    for phases in data['phases']:
+        phaseStage = f"{phases['phase']}: "
+        candidates = phases['candidates']
+        responseMessage += "\n" + phaseStage + candidates
+    print(responseMessage)
+    BOT.send_message(
+        message.chat.id,
+        responseMessage,
+        parse_mode="Markdown"
+    )
+
+
+def change_time_representation(stats):  # I expect time data as the last object
     """
     Calculates updated time as 'X ago' instead of fixed UTC time
     """
     stats.updated = datetime.now() - datetime.strptime(str(stats.updated), "%Y-%m-%d %H:%M:%S")
-    stats.updated = stats.updated - timedelta(microseconds=stats.updated.microseconds) # removing microseconds
+    stats.updated = stats.updated - timedelta(microseconds=stats.updated.microseconds)  # removing microseconds
     return stats
 
 
@@ -236,12 +253,14 @@ def show_graph_query(countryname):
         plot = plotting.history_graph(countryname)
     return plot
 
+
 def show_graph_perday_query(countryname):
     if countryname == 'all':
         plot = plotting.graph_per_day('all')
     else:
         plot = plotting.graph_per_day(countryname)
     return plot
+
 
 @BOT.message_handler(commands=['mynotif'])
 def notification_check(message):
@@ -297,7 +316,7 @@ def add_notification(message):
     language = language_check(message.chat.id)
     countrydata = check_country(message)
     notif_exists, created = Notification.get_or_create(
-        country=countrydata.country, 
+        country=countrydata.country,
         user_id=message.chat.id,
         username=message.chat.username
     )
@@ -345,9 +364,11 @@ def check_country(message, text=None):
     language = language_check(message.chat.id)
     try:
         if text:
-            countrystats = CountryStats.select().where(CountryStats.country.contains(text)).order_by(CountryStats.cases.desc()).get()
+            countrystats = CountryStats.select().where(CountryStats.country.contains(text)).order_by(
+                CountryStats.cases.desc()).get()
         else:
-            countrystats = CountryStats.select().where(CountryStats.country.contains(message.text)).order_by(CountryStats.cases.desc()).get()
+            countrystats = CountryStats.select().where(CountryStats.country.contains(message.text)).order_by(
+                CountryStats.cases.desc()).get()
 
         if not countrystats:
             BOT.send_message(message.chat.id, config.TRANSLATIONS[language]["wrong-country"])
@@ -366,10 +387,10 @@ def check_user(userid, username=None):
     user = User.get_or_none(User.id == userid)
     if not user:
         User.create(
-            id=userid, 
-            username=username, 
-            started_date=time.strftime('%d-%m-%Y'), 
-            last_check=now, 
+            id=userid,
+            username=username,
+            started_date=time.strftime('%d-%m-%Y'),
+            last_check=now,
             language='en'
         )
         LOGGER.info(f"New user detected {userid}-{username}")

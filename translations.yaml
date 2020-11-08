@@ -46,11 +46,13 @@ lang-en:
     /toprecovered - Top 10 by recovered cases
     /topdeaths - Top 10 by deaths
     /graph - Show graph of a specific country for the last 15 days
+    /vacs - Get vaccine trial data from RAPS (Regulatory Affairs Professional Society)
 
     Or you can *just message me the country name* and I will show you latest stats for that country.
   topconfirmed: Top *10* countries by *CONFIRMED* cases 🦠
   topdeaths: Top *10* countries by *DEATH* cases ☠️
   toprecovered: Top *10* countries by *RECOVERED* cases ☘️
+
 
 lang-ru:
   dm: Написать разработчику
@@ -102,6 +104,7 @@ lang-ru:
   topdeaths: Топ *10* стран по количеству *СМЕРТЕЙ* ☠️
   toprecovered: Топ *10* стран по количеству *ВЫЛЕЧЕННЫХ* ☘️
 
+
 lang-pt:
   dm: Mensagem para o programador
   pickrequest: Escolha a sua língua
@@ -152,6 +155,7 @@ lang-pt:
   topdeaths: Os *10* países com um total de casos *ÓBIDOS* ☠️
   toprecovered: Os *10* países com um total de casos *RECUPERADOS* ☘️
 
+
 lang-ro:
   dm: Comunica cu developer
   pickrequest: Alege limba
@@ -201,6 +205,7 @@ lang-ro:
   topconfirmed: Top *10* țări cu un numar total de cazuri *CONFIRMATE* 🦠
   topdeaths: Top *10* țări cu un numar total de *DECEDAȚI* ☠️
   toprecovered: Top *10* țări cu un numar total de *RECUPERAȚI* ☘️
+
 
 lang-es:
   dm: Mensaje para el desarrollador

@@ -63,5 +63,17 @@ class Notification(BaseModel):
    last_check = DateTimeField(default=datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
    added = DateTimeField(default=datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
 
+
+# class VaccineData(BaseModel):
+#    class Meta:
+#       table_name = 'vaccinedata'
+#
+#    candidate = CharField(max_length=25)
+#    mechanism = TextField()
+#    sponsors = TextField()
+#    trialPhase = TextField()
+#    institutions = TextField()
+
+
 db.connect()
 db.create_tables([User, GlobalStats, CountryStats, Notification])
