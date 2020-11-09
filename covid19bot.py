@@ -54,47 +54,87 @@ def iq_callback(query):
     Callback query handler
     """
     if query.data.startswith('lang-'):
+        LOGGER.info(f"{query.message.chat.id}-{query.message.chat.username}-query:{query.data}")
         user_language_update(query.data, query.message.chat.id)
         BOT.answer_callback_query(query.id, config.TRANSLATIONS[query.data]["pick"])
+
     if query.data.startswith('graph-'):
+        LOGGER.info(f"{query.message.chat.id}-{query.message.chat.username}-query:{query.data}")
         language = language_check(query.message.chat.id)
         countryname = query.data.replace('graph-', '')
         callback_answer = config.TRANSLATIONS[language]["show-graph-alert"].format(15)
         BOT.answer_callback_query(query.id, callback_answer)
         graph = show_graph_query(countryname)
         BOT.send_photo(query.message.chat.id, graph)
+
     if query.data.startswith('graphperday-'):
+        LOGGER.info(f"{query.message.chat.id}-{query.message.chat.username}-query:{query.data}")
         language = language_check(query.message.chat.id)
         countryname = query.data.replace('graphperday-', '')
         callback_answer = config.TRANSLATIONS[language]["show-graph-alert"].format(30)
         BOT.answer_callback_query(query.id, callback_answer)
         graph = show_graph_perday_query(countryname)
         BOT.send_photo(query.message.chat.id, graph)
+
     if query.data.startswith('notif-'):
+        LOGGER.info(f"{query.message.chat.id}-{query.message.chat.username}-query:{query.data}")
         if query.data == 'notif-remove':
             remove_notif(query)
         else:
             edit_notif_callback_message(query)
+
     if query.data.startswith('vaccine-'):
-        candidate_number = int(query.data.replace('vaccine-details-', ''))
-        get_vaccine_details(query, candidate_number)
+        LOGGER.info(f"{query.message.chat.id}-{query.message.chat.username}-query:{query.data}")
+        if query.data.startswith('vaccine-details'):
+            candidate_number = int(query.data.replace('vaccine-details-', ''))
+            show_vaccine_description(query, candidate_number)
+        else:
+            candidate_number = int(query.data.replace('vaccine-data-', ''))
+            get_vaccine_details(query, candidate_number)
         
+
+def show_vaccine_description(query, candidate):
+    keyboard = telebot.types.InlineKeyboardMarkup()
+    if candidate == 0:
+        keyboard.add(
+            telebot.types.InlineKeyboardButton('Next', callback_data=f"vaccine-data-{candidate + 1}")
+        )
+    elif candidate == 50:
+        keyboard.add(
+            telebot.types.InlineKeyboardButton('Previous', callback_data=f"vaccine-data-{candidate - 1}")
+        )
+    else:
+        keyboard.row(
+            telebot.types.InlineKeyboardButton('Previous', callback_data=f"vaccine-data-{candidate - 1}"),
+            telebot.types.InlineKeyboardButton('Next', callback_data=f"vaccine-data-{candidate + 1}"),
+        )
+    BOT.answer_callback_query(query.id)
+    BOT.edit_message_text(
+        VACCINE_DATA['data'][candidate]['details'],
+        query.message.chat.id,
+        query.message.message_id,
+        reply_markup=keyboard,
+        parse_mode='Markdown'
+    )
 
 
 def get_vaccine_details(query, candidate):
     keyboard = telebot.types.InlineKeyboardMarkup()
     if candidate == 0:
         keyboard.add(
-            telebot.types.InlineKeyboardButton('Next', callback_data=f"vaccine-details-{candidate + 1}")
+            telebot.types.InlineKeyboardButton('Next', callback_data=f"vaccine-data-{candidate + 1}")
         )
     elif candidate == 50:
         keyboard.add(
-            telebot.types.InlineKeyboardButton('Previous', callback_data=f"vaccine-details-{candidate - 1}")
+            telebot.types.InlineKeyboardButton('Previous', callback_data=f"vaccine-data-{candidate - 1}")
         )
     else:
         keyboard.row(
-            telebot.types.InlineKeyboardButton('Previous', callback_data=f"vaccine-details-{candidate - 1}"),
-            telebot.types.InlineKeyboardButton('Next', callback_data=f"vaccine-details-{candidate + 1}"),
+            telebot.types.InlineKeyboardButton('Previous', callback_data=f"vaccine-data-{candidate - 1}"),
+            telebot.types.InlineKeyboardButton('Next', callback_data=f"vaccine-data-{candidate + 1}"),
+        )
+    keyboard.add(
+            telebot.types.InlineKeyboardButton('Description', callback_data=f"vaccine-details-{candidate}")
         )
     responseMessage = f"""
 *💉 Candidate:* {VACCINE_DATA['data'][candidate]['candidate']}
@@ -200,9 +240,10 @@ def all_stats(message):
 
 @BOT.message_handler(commands=['vacs'])
 def get_vaccine_data(message):
+    LOGGER.info(f"{message.chat.id}-{message.chat.username}-command:{message.text}")
     keyboard = telebot.types.InlineKeyboardMarkup()
     keyboard.add(
-        telebot.types.InlineKeyboardButton('Details', callback_data='vaccine-details-0')
+        telebot.types.InlineKeyboardButton('Details', callback_data='vaccine-data-0')
     )
     responseMessage = f"🧪*Total Candidates:*  {VACCINE_DATA['totalCandidates']}"
     for phases in VACCINE_DATA['phases']:
