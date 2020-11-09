@@ -6,6 +6,7 @@ import time
 from datetime import datetime, timedelta
 import config
 import plotting
+import requests, json
 from dbmodels import GlobalStats, CountryStats, User, Notification
 
 BOT = telebot.TeleBot(config.TELEGRAM["token"])
@@ -15,6 +16,17 @@ logging.basicConfig(
     level=logging.INFO
 )
 LOGGER = logging.getLogger(__name__)
+
+# Vaccine data
+response = requests.get("https://disease.sh/v3/covid-19/vaccine")
+data = response.json()
+with open('vaccinedata.json', 'w') as f:
+    json.dump(data, f, indent = 4, sort_keys = True)
+f.close()
+
+with open('vaccinedata.json') as f:
+    VACCINE_DATA = json.load(f)
+f.close()
 
 
 @BOT.message_handler(commands=['start', 'help'])
@@ -63,6 +75,42 @@ def iq_callback(query):
             remove_notif(query)
         else:
             edit_notif_callback_message(query)
+    if query.data.startswith('vaccine-'):
+        candidate_number = int(query.data.replace('vaccine-details-', ''))
+        get_vaccine_details(query, candidate_number)
+        
+
+
+def get_vaccine_details(query, candidate):
+    keyboard = telebot.types.InlineKeyboardMarkup()
+    if candidate == 0:
+        keyboard.add(
+            telebot.types.InlineKeyboardButton('Next', callback_data=f"vaccine-details-{candidate + 1}")
+        )
+    elif candidate == 50:
+        keyboard.add(
+            telebot.types.InlineKeyboardButton('Previous', callback_data=f"vaccine-details-{candidate - 1}")
+        )
+    else:
+        keyboard.row(
+            telebot.types.InlineKeyboardButton('Previous', callback_data=f"vaccine-details-{candidate - 1}"),
+            telebot.types.InlineKeyboardButton('Next', callback_data=f"vaccine-details-{candidate + 1}"),
+        )
+    responseMessage = f"""
+*💉 Candidate:* {VACCINE_DATA['data'][candidate]['candidate']}
+*🧬 Mechanism:* {VACCINE_DATA['data'][candidate]['mechanism']}
+*💸 Sponsors:* {VACCINE_DATA['data'][candidate]['sponsors']}
+*⚖️ Trial Phase:* {VACCINE_DATA['data'][candidate]['trialPhase']}
+*🏥 Institutions:* {VACCINE_DATA['data'][candidate]['institutions']}
+        """.replace("'", "")
+    BOT.answer_callback_query(query.id)
+    BOT.edit_message_text(
+        responseMessage,
+        query.message.chat.id,
+        query.message.message_id,
+        reply_markup=keyboard,
+        parse_mode='Markdown'
+    )
 
 
 def remove_notif(query):
@@ -152,19 +200,20 @@ def all_stats(message):
 
 @BOT.message_handler(commands=['vacs'])
 def get_vaccine_data(message):
-    import requests
-    response = requests.get("https://disease.sh/v3/covid-19/vaccine")
-    data = response.json()
-    responseMessage = f"🧪*Total Candidates:*  {data['totalCandidates']}"
-    for phases in data['phases']:
+    keyboard = telebot.types.InlineKeyboardMarkup()
+    keyboard.add(
+        telebot.types.InlineKeyboardButton('Details', callback_data='vaccine-details-0')
+    )
+    responseMessage = f"🧪*Total Candidates:*  {VACCINE_DATA['totalCandidates']}"
+    for phases in VACCINE_DATA['phases']:
         phaseStage = f"{phases['phase']}: "
         candidates = phases['candidates']
         responseMessage += "\n" + phaseStage + candidates
-    print(responseMessage)
     BOT.send_message(
         message.chat.id,
         responseMessage,
-        parse_mode="Markdown"
+        parse_mode="Markdown",
+        reply_markup=keyboard
     )
 
 
