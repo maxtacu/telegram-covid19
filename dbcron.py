@@ -1,5 +1,5 @@
 import requests
-from dbmodels import GlobalStats, CountryStats, VaccineData
+from dbmodels import GlobalStats, CountryStats
 import datetime
 import config
 import time
