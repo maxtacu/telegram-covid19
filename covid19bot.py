@@ -468,21 +468,31 @@ def check_country(message, text=None):
         BOT.send_message(message.chat.id, config.TRANSLATIONS[language]["wrong-country"])
 
 
-def check_user(userid, username=None):
+def check_user(userid, username):
     """
     Check the user in the database.
     In case it doesnt exist it will add it with ENG default language
     """
     now = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+
     user = User.get_or_none(User.id == userid)
+    
     if not user:
-        User.create(
-            id=userid,
-            username=username,
-            started_date=time.strftime('%d-%m-%Y'),
-            last_check=now,
-            language='en'
-        )
+        if not username:
+            User.create(
+                id=userid,
+                started_date=time.strftime('%d-%m-%Y'),
+                last_check=now,
+                language='en'
+            )
+        else:
+            User.create(
+                id=userid,
+                username=username,
+                started_date=time.strftime('%d-%m-%Y'),
+                last_check=now,
+                language='en'
+            )
         LOGGER.info(f"New user detected {userid}-{username}")
 
 
