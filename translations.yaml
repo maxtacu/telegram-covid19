@@ -39,7 +39,9 @@ lang-en:
   help: |
     I will show you current stats of COVID-19 Worldwide 
     
-    The following commands are available: 
+    *Just message me the country name* and I will show you latest stats for that country.
+
+    Also the following commands are available: 
     /help - Show this message 
     /stats - Check general stats 
     /topcases - Top 10 by confirmed cases
@@ -47,8 +49,6 @@ lang-en:
     /topdeaths - Top 10 by deaths
     /graph - Show graph of a specific country for the last 15 days
     /vacs - Get vaccine trial data from RAPS (Regulatory Affairs Professional Society)
-
-    Or you can *just message me the country name* and I will show you latest stats for that country.
   topconfirmed: Top *10* countries by *CONFIRMED* cases 🦠
   topdeaths: Top *10* countries by *DEATH* cases ☠️
   toprecovered: Top *10* countries by *RECOVERED* cases ☘️
@@ -91,15 +91,15 @@ lang-ru:
   help: |
     Я покажу тебе последнюю статистику по COVID-19 по всему миру.
 
-    Следующие команды тебе доступны:
+    *Чтобы увидеть статистику по желаемой стране, ты можешь просто отправить мне название страны НА АНГЛИЙСКОМ*
+
+    Также следующие команды тебе доступны:
     /help - Показать это сообщение
     /stats - Показать общую статистику
     /topcases - Топ 10 стран по общему количеству случаев
     /toprecovered - Топ 10 стран по количеству вылеченных
     /topdeaths - Топ 10 стран по количеству смертей
-    /graph - Показать график случаев по какой-либо стране за последние 15 дней
-
-    Также чтобы увидеть статистику по желаемой стране, ты можешь просто отправить мне название страны на английском 
+    /graph - Показать график случаев по какой-либо стране за последние 15 дней      
   topconfirmed: Топ *10* стран по количеству *ПОДTВЕРЖДЁННЫХ* случаев 🦠
   topdeaths: Топ *10* стран по количеству *СМЕРТЕЙ* ☠️
   toprecovered: Топ *10* стран по количеству *ВЫЛЕЧЕННЫХ* ☘️
