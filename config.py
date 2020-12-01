@@ -3,7 +3,7 @@ import yaml
 
 TELEGRAM = {
     "token": os.getenv(
-        "TOKEN", "test-token"
+        "TOKEN", "test-token" # set your token here or as environment variable
     )
 }
 DATABASE = {

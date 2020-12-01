@@ -17,7 +17,7 @@ logging.basicConfig(
 )
 LOGGER = logging.getLogger(__name__)
 
-# Vaccine data
+# Vaccine data is updated once a day when the bot restarts
 response = requests.get("https://disease.sh/v3/covid-19/vaccine")
 data = response.json()
 with open('vaccinedata.json', 'w') as f:
@@ -182,7 +182,7 @@ def edit_notif_callback_message(query):
 
 def user_language_update(queryData, user):
     queryData = queryData.replace('lang-', '')
-    User.update(language=queryData).where(User.id == user).execute()
+    User.update(language=queryData).where(User.chat_id == user).execute()
 
 
 def language_pick_buttons(message, language):
@@ -205,13 +205,13 @@ def language_pick_buttons(message, language):
 
 
 def language_check(userid):
-    language = User.get(User.id == userid).language
+    language = User.get(User.chat_id == userid).language
     return 'lang-' + language
 
 
 def update_user_checktime(user_id):
     now = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-    User.update(last_check=now).where(User.id == user_id).execute()
+    User.update(last_check=now).where(User.chat_id == user_id).execute()
 
 
 @BOT.message_handler(commands=['stats'])
@@ -475,19 +475,19 @@ def check_user(userid, username):
     """
     now = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
 
-    user = User.get_or_none(User.id == userid)
+    user = User.get_or_none(User.chat_id == userid)
     
     if not user:
         if not username:
             User.create(
-                id=userid,
+                chat_id=userid,
                 started_date=time.strftime('%d-%m-%Y'),
                 last_check=now,
                 language='en'
             )
         else:
             User.create(
-                id=userid,
+                chat_id=userid,
                 username=username,
                 started_date=time.strftime('%d-%m-%Y'),
                 last_check=now,

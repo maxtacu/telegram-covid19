@@ -12,7 +12,7 @@ In case you see any translation errors, please reach the developer (check comman
 ![](images/moldova.png)
 #### You can just type first few letters of the country
 ![](images/portugal.png)
-#### In case you want to check all available commands and features or just to send a "thank you" to the developer
+#### In case you want to check all available commands and features or just to say "thank you" to developer
 ![](images/help.png)
 
 ## Data

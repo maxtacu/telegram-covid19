@@ -7,7 +7,7 @@ User=mtacu
 Group=mtacu
 WorkingDirectory=/home/mtacu/telegram-covid19
 ExecStart=/home/mtacu/telegram-covid19/covid19bot.py
-Environment="TOKEN=TOKEN-FROM-BOTFATHER"
+Environment="TOKEN=YOUR-BOT-TOKEN-FROM-BOTFATHER"
 StandardOutput=syslog
 StandardError=syslog
 Restart=always

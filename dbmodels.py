@@ -13,7 +13,7 @@ class User(BaseModel):
    class Meta:
       table_name = 'users'
 
-   id = IntegerField(primary_key=True)
+   chat_id = IntegerField()
    username = TextField(default='noname')
    started_date = DateField()
    last_check = DateTimeField(default=datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
