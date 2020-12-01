@@ -422,6 +422,7 @@ def add_notification(message):
 @BOT.message_handler(content_types=["text"])
 def get_country_stats(message):
     LOGGER.info(f"{message.chat.id}-{message.chat.username}-text:{message.text}")
+    check_user(message.chat.id, message.chat.username)
     language = language_check(message.chat.id)
     country_stats = check_country(message)
     keyboard = telebot.types.InlineKeyboardMarkup()
@@ -434,7 +435,7 @@ def get_country_stats(message):
                     config.TRANSLATIONS[language]["show-graph"],
                     callback_data=f'graph-{country_stats.country}'),
                 telebot.types.InlineKeyboardButton(
-                    "Cases per day",
+                    config.TRANSLATIONS[language]["show-graph-perday"],
                     callback_data=f'graphperday-{country_stats.country}')
             )
             BOT.send_message(
