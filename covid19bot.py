@@ -462,11 +462,32 @@ def check_country(message, text=None):
                 CountryStats.cases.desc()).get()
 
         if not countrystats:
-            BOT.send_message(message.chat.id, config.TRANSLATIONS[language]["wrong-country"])
+            country_guess = did_you_mean(message.text)
+            if country_guess:
+                BOT.send_message(message.chat.id, f"Sorry! Did you mean *{country_guess}*?", parse_mode="Markdown")
+            else:
+                BOT.send_message(message.chat.id, config.TRANSLATIONS[language]["wrong-country"])
             return None
         return countrystats
     except:
-        BOT.send_message(message.chat.id, config.TRANSLATIONS[language]["wrong-country"])
+        country_guess = did_you_mean(message.text)
+        if country_guess:
+            BOT.send_message(message.chat.id, f"Sorry! Did you mean *{country_guess}*?", parse_mode="Markdown")
+        else:
+            BOT.send_message(message.chat.id, config.TRANSLATIONS[language]["wrong-country"])
+
+
+def did_you_mean(text):
+    from difflib import get_close_matches
+    all_countries = []
+    query = CountryStats.select(CountryStats.country)
+    for country in query:
+        all_countries.append(country.country)    
+    close_match = get_close_matches(text, all_countries, n=1)
+    if close_match:
+        return close_match[0]
+    else:
+        return None
 
 
 def check_user(userid, username):
